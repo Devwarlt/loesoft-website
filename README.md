@@ -1,2 +1,2 @@
-# loesoft-website
+# LoESoft Games' Official DevBlog [![Codacy Badge](https://api.codacy.com/project/badge/Grade/be2117c9a2a14ae4b60f3df34359bb44)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Devwarlt/loesoft-website&amp;utm_campaign=Badge_Grade) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 A website for LoESoft Games used by developers.
