@@ -1,35 +1,40 @@
-create database if not exists `loesoft-devblog` default character set latin1 collate latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `loesoft-devblog`
+  DEFAULT CHARACTER SET latin1
+  COLLATE latin1_swedish_ci;
 
-use `loesoft-devblog`;
+USE `loesoft-devblog`;
 
-create table `accounts` (
-  `id` int not null auto_increment,
-  `username` varchar(32) not null,
-  `password` varchar(128) not null,
-  `access_level` smallint not null default 0,
-  primary key (`id`)
-) Engine=InnoDB;
+CREATE TABLE `accounts` (
+  `id`           INT          NOT NULL AUTO_INCREMENT,
+  `username`     VARCHAR(32)  NOT NULL,
+  `password`     VARCHAR(128) NOT NULL,
+  `access_level` SMALLINT     NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB;
 
-create table `news` (
-  `id` int not null auto_increment,
-  `creation` datetime not null default current_timestamp,
-  `edited` datetime not null default current_timestamp,
-  `author_id` int not null,
-  `reviewer_id` int not null default -1,
-  `title` text not null,
-  `tags` text,
-  `content` longtext not null,
-  primary key (`id`),
-  constraint `news_author_id_accounts_id` foreign key (`author_id`) references `accounts`(`id`)
-) Engine=InnoDB;
+CREATE TABLE `news` (
+  `id`          INT      NOT NULL AUTO_INCREMENT,
+  `creation`    DATETIME NOT NULL DEFAULT current_timestamp,
+  `edited`      DATETIME NOT NULL DEFAULT current_timestamp,
+  `author_id`   INT      NOT NULL,
+  `reviewer_id` INT      NOT NULL DEFAULT -1,
+  `title`       TEXT     NOT NULL,
+  `tags`        TEXT,
+  `content`     LONGTEXT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `news_author_id_accounts_id` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`)
+)
+  ENGINE = InnoDB;
 
-create table `changelogs` (
-  `id` int not null auto_increment,
-  `creation` datetime not null default current_timestamp,
-  `edited` datetime not null default current_timestamp,
-  `author_id` int not null,
-  `reviewer_id` int not null default -1,
-  `content` mediumtext not null,
-  primary key (`id`),
-  constraint `changelogs_author_id_accounts_id` foreign key (`author_id`) references `accounts`(`id`)
-) Engine=InnoDB;
+CREATE TABLE `changelogs` (
+  `id`          INT        NOT NULL AUTO_INCREMENT,
+  `creation`    DATETIME   NOT NULL DEFAULT current_timestamp,
+  `edited`      DATETIME   NOT NULL DEFAULT current_timestamp,
+  `author_id`   INT        NOT NULL,
+  `reviewer_id` INT        NOT NULL DEFAULT -1,
+  `content`     MEDIUMTEXT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `changelogs_author_id_accounts_id` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`)
+)
+  ENGINE = InnoDB;
