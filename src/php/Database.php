@@ -13,18 +13,26 @@ define("DB_SCHEMA", "loesoft-devblog");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");
 
-class Database
+final class Database
 {
     private static $singleton;
     private static $connection;
     private static $initialized = false;
 
+    /***
+     * Database constructor.
+     * @param \PDO $connection
+     */
     private function __construct(\PDO $connection)
     {
         self::$initialized = true;
         self::$connection = $connection;
     }
 
+    /***
+     * Gets the singleton-like instance of **Database**.
+     * @return Database
+     */
     public static function getSingleton()
     {
         if (!self::$initialized)
@@ -33,11 +41,21 @@ class Database
         return self::$singleton;
     }
 
+    /***
+     * Execute an update query on database.
+     * @param $sql : SQL query.
+     * @param null $params : (optional) extra parameters along $sql.
+     */
     public function update($sql, $params = null)
     {
         $this->insert($sql, $params);
     }
 
+    /***
+     * Execute an insert query on database.
+     * @param $sql : SQL query.
+     * @param null $params : (optional) extra parameters along $sql.
+     */
     public function insert($sql, $params = null)
     {
         $query = self::$connection->prepare($sql);
@@ -49,11 +67,23 @@ class Database
         $query->execute();
     }
 
+    /***
+     * Execute a delete query on database.
+     * @param $sql : SQL query.
+     * @param null $params : (optional) extra parameters along $sql.
+     */
     public function delete($sql, $params = null)
     {
         $this->insert($sql, $params);
     }
 
+    /***
+     * Execute a select query on database and returns a **PDOStatement** to being used at fetch response.
+     * @internal This method can result in invalidation in case of invalid query along execute (PDO).
+     * @param $sql : SQL Query.
+     * @param null $params : (optional) extra parameters along $sql.
+     * @return null|\PDOStatement
+     */
     public function select($sql, $params = null)
     {
         $query = self::$connection->query($sql);
