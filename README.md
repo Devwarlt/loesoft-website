@@ -12,8 +12,8 @@ A website for LoESoft Games used by developers to publish news about side projec
 [codacy]: https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Devwarlt/loesoft-website&amp;utm_campaign=Badge_Grade
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/be2117c9a2a14ae4b60f3df34359bb44
 
-[license]: http://creativecommons.org/publicdomain/zero/1.0/
-[license-badge]: https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg
+[license]: LICENSE
+[license-badge]: https://img.shields.io/badge/License-Apache%202.0-blue.svg
 
 [devwarlt]: https://github.com/Devwarlt
 [shot]: https://github.com/ShotRotMG
