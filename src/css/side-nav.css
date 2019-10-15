@@ -5,14 +5,13 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #00000000;
     border-right: 1px #FF45009F solid;
     overflow-x: hidden;
-    padding-top: 20px;
+    padding-top: 60px;
 }
 
 .side-nav a {
-    padding: 4px 4px 4px 4px;
+    padding: 12px 4px 12px 4px;
     font-size: 18px;
     text-align: center;
     color: orange;

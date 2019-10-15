@@ -33,3 +33,10 @@ a:link {
 hr.footer {
     border-top: 3px solid #FF45009F;
 }
+
+button {
+    border: 1px solid orange;
+    background-color: black;
+    color: white;
+    border-radius: .25em;
+}

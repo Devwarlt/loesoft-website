@@ -6,7 +6,7 @@
  * Time: 15:12
  */
 
-namespace php;
+namespace php\utilities;
 
 define("DB_HOST", "localhost");
 define("DB_SCHEMA", "loesoft-devblog");
@@ -34,7 +34,6 @@ final class Database
 {
     private static $singleton;
     private static $connection;
-    private static $initialized = false;
 
     /***
      * Database constructor.
@@ -42,7 +41,6 @@ final class Database
      */
     private function __construct(\PDO $connection)
     {
-        self::$initialized = true;
         self::$connection = $connection;
     }
 
@@ -52,7 +50,7 @@ final class Database
      */
     public static function getSingleton()
     {
-        if (!self::$initialized)
+        if (!isset(self::$singleton))
             self::$singleton = new Database(new \PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_SCHEMA, DB_USER, DB_PASSWORD));
 
         return self::$singleton;
