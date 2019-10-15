@@ -13,6 +13,23 @@ define("DB_SCHEMA", "loesoft-devblog");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");
 
+/* SAMPLE CONNECTION:
+
+require_once "php/Database.php";
+
+use php\Database as db;
+
+$db = db::getSingleton();
+$result = $db->select("select * from accounts");
+
+while ($row = $result->fetch(\PDO::FETCH_OBJ)) {
+    echo "<br />"
+        . "ID: " . $row->id . "<br />"
+        . "Username: " . $row->username . "<br />"
+        . "Password: " . $row->password . "<br />"
+        . "Access Level: " . $row->access_level;
+}*/
+
 final class Database
 {
     private static $singleton;

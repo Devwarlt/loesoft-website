@@ -21,3 +21,15 @@ a:link {
     width: 80%;
     padding: 10px;
 }
+
+.margin-offset {
+    margin-left: 200px;
+}
+
+.body {
+    color: #FF8C009F;
+}
+
+hr.footer {
+    border-top: 3px solid #FF45009F;
+}

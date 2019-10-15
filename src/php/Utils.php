@@ -41,7 +41,7 @@ final class Utils
         foreach (self::$StringsDictionary as $key => $value)
             $assetBundle["template"] = self::overrideTemplate($value, $assetBundle[$key], $assetBundle["template"]);
 
-        echo $assetBundle;
+        echo $assetBundle["template"];
     }
 
     // TODO: dynamic template generator from database.
@@ -54,7 +54,15 @@ final class Utils
      */
     private static function getContents($path)
     {
-        return file_get_contents(dirname(__FILE__ . "/$path"));
+        $result = null;
+
+        try {
+            $result = file_get_contents(dirname(__FILE__) . "/$path");
+        } catch (\Exception $exception) {
+            echo $exception->getTraceAsString();
+        }
+
+        return $result;
     }
 
     /***
