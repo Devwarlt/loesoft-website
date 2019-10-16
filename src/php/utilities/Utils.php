@@ -28,6 +28,23 @@ final class Utils
     );
 
     /***
+     * Contains a collect of default keys used in file templates.
+     * @var array
+     */
+    private static $DefaultStringsDictionary = array(
+        "{KEYWORDS}" => "loesoft, loesoft games, loe realm, loe, mmorpg, games",
+        "{OG_URL}" => "http://localhost:1000/",
+        "{OG_SITE_NAME}" => "LoESoft Games - DevBlog",
+        "{OG_TITLE}" => "LoESoft Games",
+        "{OG_DESCRIPTION}" => "Welcome to the LoESoft Games official developer blog! Here you'll find all change-logs, patch notes
+    and related documentations about our side projects.",
+        "{OG_IMAGE}" => "http://localhost:1000/media/favicon.png",
+        "{OG_IMAGE_TYPE}" => "image/png",
+        "{OG_IMAGE_WIDTH}" => "148",
+        "{OG_IMAGE_HEIGHT}" => "148"
+    );
+
+    /***
      * Echo a formatted file based in template and local file path.
      * @param $title : title of page.
      * @param $contentPath : exist file from local resources.
@@ -47,6 +64,9 @@ final class Utils
             "script" => !is_null($script) ? self::getContents("../assets/scripts/$script.js", "script") : "",
             "404" => $is404 ? self::getRelativeLocationHref() : "unknown"
         );
+
+        foreach (self::$DefaultStringsDictionary as $key => $value)
+            $assetBundle["template"] = self::replace($key, $value, $assetBundle["template"]);
 
         foreach (self::$StringsDictionary as $key => $value)
             $assetBundle["template"] = self::replace($value, $assetBundle[$key], $assetBundle["template"]);
@@ -76,6 +96,20 @@ final class Utils
     }
 
     /***
+     * Returns a formatted string that contains relative location href requested by client.
+     * @return string
+     */
+    private static function getRelativeLocationHref()
+    {
+        $location = @$_SERVER["HTTPS"] == "on" ? "https://" : "http://";
+
+        if ($_SERVER["SERVER_PORT"] != "80") $location .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+        else $location .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+
+        return $location;
+    }
+
+    /***
      * Returns an overridden **string** replaced with values based on template.
      * @param $key
      * @param $value
@@ -88,16 +122,22 @@ final class Utils
     }
 
     /***
-     * Returns a formatted string that contains relative location href requested by client.
+     * Gets a hash value from SHA512 algorithm.
+     * @param $value
      * @return string
      */
-    private static function getRelativeLocationHref()
+    public static function getSha512Hash($value)
     {
-        $location = @$_SERVER["HTTPS"] == "on" ? "https://" : "http://";
+        return hash('sha512', $value);
+    }
 
-        if ($_SERVER["SERVER_PORT"] != "80") $location .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
-        else $location .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-
-        return $location;
+    /***
+     * Verify if string is null or empty.
+     * @param $value
+     * @return bool
+     */
+    public static function IsNullOrEmptyString($value)
+    {
+        return !isset($value) || trim($value) === '';
     }
 }

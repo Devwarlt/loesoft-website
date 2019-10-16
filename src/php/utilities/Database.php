@@ -60,36 +60,39 @@ final class Database
      * Execute an update query on database.
      * @param $sql : SQL query.
      * @param null $params : (optional) extra parameters along $sql.
+     * @return bool
      */
     public function update($sql, $params = null)
     {
-        $this->insert($sql, $params);
+        return $this->insert($sql, $params);
     }
 
     /***
      * Execute an insert query on database.
      * @param $sql : SQL query.
      * @param null $params : (optional) extra parameters along $sql.
+     * @return bool
      */
     public function insert($sql, $params = null)
     {
         $query = self::$connection->prepare($sql);
 
         if (!is_null($params))
-            for ($i = 0; $i < count($params); $i++)
-                $query->bindParam($i + 1, $params[$i]);
+            foreach ($params as $key => $value)
+                $query->bindParam($key, $value);
 
-        $query->execute();
+        return $query->execute();
     }
 
     /***
      * Execute a delete query on database.
      * @param $sql : SQL query.
      * @param null $params : (optional) extra parameters along $sql.
+     * @return bool
      */
     public function delete($sql, $params = null)
     {
-        $this->insert($sql, $params);
+        return $this->insert($sql, $params);
     }
 
     /***
@@ -104,8 +107,8 @@ final class Database
         $query = self::$connection->query($sql);
 
         if (!is_null($params))
-            for ($i = 0; $i < count($params); $i++)
-                $query->bindParam($i + 1, $params[$i]);
+            foreach ($params as $key => $value)
+                $query->bindParam($key, $value);
 
         if ($query->execute() && $query->rowCount() > 0)
             return $query;

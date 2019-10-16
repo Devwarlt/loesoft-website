@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="msapplication-config" content="none"/>
+    <meta name="keywords" content="{KEYWORDS}"/>
+    <meta property="og:url" content="{OG_URL}">
+    <meta property="og:site_name" content="{OG_SITE_NAME}">
+    <meta property="og:title" content="{OG_TITLE}">
+    <meta property="og:description" content="{OG_DESCRIPTION}">
+    <meta property="og:image" content="{OG_IMAGE}">
+    <meta property="og:image:type" content="{OG_IMAGE_TYPE}">
+    <meta property="og:image:width" content="{OG_IMAGE_WIDTH}">
+    <meta property="og:image:height" content="{OG_IMAGE_HEIGHT}">
     <title>LoESoft Games - {TITLE}</title>
     <link href="../../media/favicon.ico" rel="icon"/>
     <link href="../../css/main.css" rel="stylesheet"/>
@@ -13,7 +23,8 @@
 <body>
 <div id="side-bar" class="side-nav">
     <a href="../../">Home</a>
-    <a href="#" onclick="showOverlay('login')">Login</a>
+    <!-- TODO: implements handler for "login-option" id. -->
+    <a id="login-option" href="#" onclick="showOverlay('login')">Login</a>
 </div>
 <div class="margin-offset">
     <h1>_{TITLE}</h1>
@@ -25,9 +36,11 @@
 <footer class="margin-offset">{FOOTER}</footer>
 <script src="../../js/jquery-3.3.1.slim.min.js"></script>
 <script src="../../js/toggle-overlay.js"></script>
+<script src="../../js/version.js"></script>
 <script>
     $(document).ready(function () {
         $("#currentYear").html(new Date().getFullYear());
+        $("#version").html(version);
     });
 </script>
 {SCRIPT}
