@@ -10,15 +10,14 @@ namespace php\handlers;
 
 include "../utilities/DateUtils.php";
 include "../utilities/Utils.php";
-include "../utilities/Database.php";
+inclide "../utilities/DatabaseUtils.php";
 
 use php\utilities\DateUtils as dutils;
 use php\utilities\Utils as utils;
-use php\utilities\Database as db;
+use php\utilities\DatabaseUtils as dbutils;
 
 define("LOGIN_USERNAME", "login-username-cookie");
 define("LOGIN_PASSWORD", "login-password-cookie");
-define("LOGIN_LEVEL", "login-access-level-cookie");
 
 
 final class LoginHandler implements IHandler
@@ -47,18 +46,10 @@ final class LoginHandler implements IHandler
 
         $username = $params["username"];
         $password = $params["password"];
-        $db = db::getSingleton();
-        $result =
-            $db->select("select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
-                array(
-                    ":username" => utils::getSha512Hash($username),
-                    ":password" => utils::getSha512Hash($password)
-                ));
-
-        if ($result === null) return;
-
-        $account = $result->fetch(\PDO::FETCH_OBJ);
-        $this->setLoginCookies($username, $password, $account->acces_level);
+		$dbu = dbutils::getSingleton();
+		
+		if ($dbu->isAccountExist($username, $password))
+			$this->setLoginCookies($username, $password);
     }
 
     /***
@@ -74,15 +65,13 @@ final class LoginHandler implements IHandler
      * Set current login session cookies.
      * @param $username
      * @param $password
-     * @param $accessLevel
      */
     private function setLoginCookies($username, $password, $accessLevel)
     {
         $expire = dutils::getCurrentTimeAddition(dutils::getHour());
         $path = "/";
 
-        setcookie(LOGIN_USERNAME, utils::getSha512Hash($username), $expire, $path);
-        setcookie(LOGIN_PASSWORD, utils::getSha512Hash($password), $expire, $path);
-        setcookie(LOGIN_LEVEL, utils::getSha512Hash($accessLevel), $expire, $path);
+        setcookie(LOGIN_USERNAME, $username, $expire, $path);
+        setcookie(LOGIN_PASSWORD, $password, $expire, $path);
     }
 }

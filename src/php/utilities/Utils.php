@@ -8,7 +8,7 @@
 
 namespace php\utilities;
 
-include_once "file_extension/IFileExtension.php";
+include "file_extension/IFileExtension.php";
 
 use \php\utilities\file_extension\IFileExtension;
 
