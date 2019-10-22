@@ -11,46 +11,10 @@ namespace php\utilities;
 
 final class DateUtils
 {
-    private static $second = 1;
-    private static $minute = 1 * 60;
-    private static $hour = 1 * 60 * 60;
-    private static $day = 1 * 24 * 60 * 60;
-
-    /**
-     * Gets a value that represents **1 second**.
-     * @return int
-     */
-    public static function getSecond()
-    {
-        return self::$second;
-    }
-
-    /**
-     * Gets a value that represents **1 minute**.
-     * @return float|int
-     */
-    public static function getMinute()
-    {
-        return self::$minute;
-    }
-
-    /**
-     * Gets a value that represents **1 hour**.
-     * @return float|int
-     */
-    public static function getHour()
-    {
-        return self::$hour;
-    }
-
-    /**
-     * Gets a value that represents **1 day**.
-     * @return float|int
-     */
-    public static function getDay()
-    {
-        return self::$day;
-    }
+    const second = 1;
+    const minute = 1 * 60;
+    const hour = 1 * 60 * 60;
+    const day = 1 * 24 * 60 * 60;
 
     /***
      * Gets a current server time in seconds with additional second.

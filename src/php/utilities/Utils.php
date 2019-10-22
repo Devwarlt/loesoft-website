@@ -60,8 +60,8 @@ final class Utils
             "title" => $title,
             "body" => self::getContents("../assets/contents/$contentPath" . $extension->getExtension()),
             "footer" => self::getContents("../template/page_footer.html"),
-            "css" => !is_null($css) ? self::getContents("../assets/stylesheets/$css.css", "style") : "",
-            "script" => !is_null($script) ? self::getContents("../assets/scripts/$script.js", "script") : "",
+            "css" => $css !== null ? self::getContents("../assets/stylesheets/$css.css", "style") : "",
+            "script" => $script !== null ? self::getContents("../assets/scripts/$script.js", "script") : "",
             "404" => $is404 ? self::getRelativeLocationHref() : "unknown"
         );
 
@@ -74,9 +74,6 @@ final class Utils
         echo $assetBundle["template"];
     }
 
-    // TODO: dynamic template generator from database.
-    //public static function getTemplateFromDb($title, $postId, $script = null);
-
     /***
      * Returns a string based on local path from folder **src/php**
      * @param $path : exist file from local resources.
@@ -85,14 +82,13 @@ final class Utils
      */
     private static function getContents($path, $tag = null)
     {
-        $result = null;
         $file = dirname(__FILE__) . "/$path";
 
         if (!file_exists($file)) echo "<p style='color: red'><strong>File doesn't exist:</strong> " . dirname(__FILE__) . "/$path</p>";
 
         $result = file_get_contents($file);
 
-        return !is_null($tag) ? "<" . $tag . ">" . $result . "</" . $tag . ">" : $result;
+        return $tag !== null ? "<" . $tag . ">" . $result . "</" . $tag . ">" : $result;
     }
 
     /***
@@ -138,6 +134,6 @@ final class Utils
      */
     public static function IsNullOrEmptyString($value)
     {
-        return !isset($value) || trim($value) === '';
+        return $value !== null || trim($value) === '';
     }
 }

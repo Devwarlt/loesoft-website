@@ -28,7 +28,9 @@ while ($row = $result->fetch(\PDO::FETCH_OBJ)) {
         . "Username: " . $row->username . "<br />"
         . "Password: " . $row->password . "<br />"
         . "Access Level: " . $row->access_level;
-}*/
+}
+
+*/
 
 final class Database
 {
@@ -50,7 +52,7 @@ final class Database
      */
     public static function getSingleton()
     {
-        if (!isset(self::$singleton))
+        if (self::$singleton === null)
             self::$singleton = new Database(new \PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_SCHEMA, DB_USER, DB_PASSWORD));
 
         return self::$singleton;
@@ -70,14 +72,14 @@ final class Database
     /***
      * Execute an insert query on database.
      * @param $sql : SQL query.
-     * @param null $params : (optional) extra parameters along $sql.
+     * @param array|null $params : (optional) extra parameters along $sql.
      * @return bool
      */
-    public function insert($sql, $params = null)
+    public function insert($sql, array $params = null)
     {
         $query = self::$connection->prepare($sql);
 
-        if (!is_null($params))
+        if ($params !== null)
             foreach ($params as $key => $value)
                 $query->bindParam($key, $value);
 
@@ -87,10 +89,10 @@ final class Database
     /***
      * Execute a delete query on database.
      * @param $sql : SQL query.
-     * @param null $params : (optional) extra parameters along $sql.
+     * @param array|null $params : (optional) extra parameters along $sql.
      * @return bool
      */
-    public function delete($sql, $params = null)
+    public function delete($sql, array $params = null)
     {
         return $this->insert($sql, $params);
     }
@@ -99,14 +101,14 @@ final class Database
      * Execute a select query on database and returns a **PDOStatement** to being used at fetch response.
      * @internal This method can result in invalidation in case of invalid query along execute (PDO).
      * @param $sql : SQL Query.
-     * @param null $params : (optional) extra parameters along $sql.
+     * @param array|null $params : (optional) extra parameters along $sql.
      * @return null|\PDOStatement
      */
-    public function select($sql, $params = null)
+    public function select($sql, array $params = null)
     {
         $query = self::$connection->query($sql);
 
-        if (!is_null($params))
+        if ($params !== null)
             foreach ($params as $key => $value)
                 $query->bindParam($key, $value);
 

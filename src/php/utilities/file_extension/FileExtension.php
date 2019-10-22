@@ -11,10 +11,10 @@ namespace php\utilities\file_extension;
 
 final class FileExtension implements IFileExtension
 {
-    private static $PhpExtension;
-    private static $HtmlExtension;
-    private static $PhpFormat = ".php";
-    private static $HtmlFormat = ".html";
+    private static $phpExtension;
+    private static $htmlExtension;
+    const phpFormat = ".php";
+    const htmlFormat = ".html";
 
     private $format;
 
@@ -29,10 +29,10 @@ final class FileExtension implements IFileExtension
      */
     public static function getPhpExtension()
     {
-        if (!isset(self::$PhpExtension))
-            self::$PhpExtension = new FileExtension(self::$PhpFormat);
+        if (self::$phpExtension === null)
+            self::$phpExtension = new FileExtension(self::phpFormat);
 
-        return self::$PhpExtension;
+        return self::$phpExtension;
     }
 
     /***
@@ -41,10 +41,10 @@ final class FileExtension implements IFileExtension
      */
     public static function getHtmlExtension()
     {
-        if (!isset(self::$HtmlExtension))
-            self::$HtmlExtension = new FileExtension(self::$HtmlFormat);
+        if (self::$htmlExtension === null)
+            self::$htmlExtension = new FileExtension(self::htmlFormat);
 
-        return self::$HtmlExtension;
+        return self::$htmlExtension;
     }
 
     /***

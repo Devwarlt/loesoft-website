@@ -10,7 +10,7 @@ namespace php\handlers;
 
 include "../utilities/DateUtils.php";
 include "../utilities/Utils.php";
-inclide "../utilities/DatabaseUtils.php";
+include "../utilities/DatabaseUtils.php";
 
 use php\utilities\DateUtils as dutils;
 use php\utilities\Utils as utils;
@@ -56,7 +56,7 @@ final class LoginHandler implements IHandler
      * Verify if user is already logged in.
      * @return bool
      */
-    public function isLoggedIn()
+    private function isLoggedIn()
     {
         return array_key_exists(LOGIN_USERNAME, $_COOKIE) && array_key_exists(LOGIN_PASSWORD, $_COOKIE);
     }
@@ -66,7 +66,7 @@ final class LoginHandler implements IHandler
      * @param $username
      * @param $password
      */
-    private function setLoginCookies($username, $password, $accessLevel)
+    private function setLoginCookies($username, $password)
     {
         $expire = dutils::getCurrentTimeAddition(dutils::getHour());
         $path = "/";

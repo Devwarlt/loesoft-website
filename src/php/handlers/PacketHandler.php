@@ -8,8 +8,14 @@
 
 namespace php\handlers;
 
+include "PacketId.php";
+include "LoginHandler.php";
+include "RegisterHandler.php";
 
-// TODO: make a global packet handler algorithm that implements usage of jQuery scripts along post methods.
+use php\handlers\PacketId as pid;
+use php\handlers\LoginHandler as login;
+use php\handlers\RegisterHandler as register;
+
 final class PacketHandler implements IHandler
 {
     private static $singleton;
@@ -26,8 +32,21 @@ final class PacketHandler implements IHandler
         return self::$singleton;
     }
 
+    /***
+     * Handle all incoming packets from client-side (jQuery asynchronous integration).
+     * @param array $params
+     */
     public function handle(array $params)
     {
-        // TODO: Implement handle() method.
+        if (!array_key_exists("id", $params))
+            return;
+
+        $id = $params["id"];
+
+        switch ($id) {
+            case pid::login: login::getSingleton()->handle($params); break;
+            case pid::register: register::getSingleton()->handle($params); break;
+            default: return;
+        }
     }
 }
