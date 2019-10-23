@@ -8,8 +8,10 @@
 
 include "php/utilities/Utils.php";
 include "php/handlers/IHandler.php";
+include "php/handlers/LoginHandler.php";
 
 use php\utilities\Utils as utils;
 use php\utilities\FileExtension as fe;
+use php\handlers\LoginHandler as login;
 
-utils::getTemplateFromFile("News", "news", fe::getPhpExtension());
+utils::getTemplateFromFile("News", "news", fe::getPhpExtension(), null, null, false, login::isLoggedIn());
