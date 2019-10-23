@@ -8,9 +8,7 @@
 
 namespace php\utilities;
 
-include "file_extension/IFileExtension.php";
-
-use \php\utilities\file_extension\IFileExtension;
+include "FileExtension.php";
 
 final class Utils
 {
@@ -24,7 +22,8 @@ final class Utils
         "footer" => "{FOOTER}",
         "css" => "{CSS}",
         "script" => "{SCRIPT}",
-        "404" => "{404}"
+        "404" => "{404}",
+        "login" => "{LOGIN}"
     );
 
     /***
@@ -51,9 +50,10 @@ final class Utils
      * @param $extension : file extension.
      * @param null $css : (optional) css that will be embedded into page template.
      * @param $is404 : (optional) replace **{PAGE}** string key to current targeted page.
+     * @param $loggedIn : (optional) replace **{LOGIN}** string key to current log-in definition.
      * @param null $script : (optional) javascript / jQuery script that will be embedded into page template.
      */
-    public static function getTemplateFromFile($title, $contentPath, IFileExtension $extension, $css = null, $script = null, $is404 = false)
+    public static function getTemplateFromFile($title, $contentPath, FileExtension $extension, $css = null, $script = null, $is404 = false, $loggedIn = false)
     {
         $assetBundle = array(
             "template" => self::getContents("../template/page_body.html"),
@@ -62,7 +62,8 @@ final class Utils
             "footer" => self::getContents("../template/page_footer.html"),
             "css" => $css !== null ? self::getContents("../assets/stylesheets/$css.css", "style") : "",
             "script" => $script !== null ? self::getContents("../assets/scripts/$script.js", "script") : "",
-            "404" => $is404 ? self::getRelativeLocationHref() : "unknown"
+            "404" => $is404 ? self::getRelativeLocationHref() : "unknown",
+            "login" => $loggedIn ? "<a id=\"logout-option\" onclick=\"showOverlay('logout')\">Logout</a>" : "<a id=\"login-option\" onclick=\"showOverlay('login')\">Login</a>"
         );
 
         foreach (self::$DefaultStringsDictionary as $key => $value)
@@ -99,7 +100,8 @@ final class Utils
     {
         $location = @$_SERVER["HTTPS"] == "on" ? "https://" : "http://";
 
-        if ($_SERVER["SERVER_PORT"] != "80") $location .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+        if ($_SERVER["SERVER_PORT"] != "80")
+            $location .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
         else $location .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 
         return $location;
@@ -132,8 +134,41 @@ final class Utils
      * @param $value
      * @return bool
      */
-    public static function IsNullOrEmptyString($value)
+    public static function isNullOrEmpty($value)
     {
-        return $value !== null || trim($value) === '';
+        return $value === null || empty($value);
+    }
+
+    /***
+     * Try to get a value from dictionary based on key entry.
+     * @param array $dictionary
+     * @param $key
+     * @return mixed|null
+     */
+    public static function tryGetValue(array $dictionary, $key)
+    {
+        if (count($dictionary) > 0)
+            foreach ($dictionary as $innerKey => $innerValue) {
+                echo $innerKey . "' equals '" . $key . "'' ? " . $innerKey === $key;
+
+                if ($innerKey === $key)
+                    return $innerValue;
+            }
+
+        return null;
+    }
+
+    /***
+     * Replace full string params.
+     * @param $value
+     * @param array $array
+     * @return string
+     */
+    public static function replaceArray($value, array $array)
+    {
+        foreach ($array as $innerKey => $innerValue)
+            $value = self::replace($innerKey, $innerValue, $value);
+
+        return $value;
     }
 }

@@ -18,16 +18,20 @@
     <link href="../../css/main.css" rel="stylesheet"/>
     <link href="../../css/side-nav.css" rel="stylesheet"/>
     <link href="../../css/overlay.css" rel="stylesheet"/>
+    <link href="../../css/utils.css" rel="stylesheet"/>
     {CSS}
 </head>
 <body>
 <div id="side-bar" class="side-nav">
+    {LOGIN}
+    <br/>
+    <br/>
     <a href="../../">Home</a>
-    <!-- TODO: implements handler for "login-option" id. -->
-    <a id="login-option" href="#" onclick="showOverlay('login')">Login</a>
+    <a href="../../news">News</a>
+    <a href="../../change-log">Change Log</a>
 </div>
 <div class="margin-offset">
-    <h1>_{TITLE}</h1>
+    <h1 style="padding-left: 64px">_{TITLE}</h1>
     <br/>
     <div class="body">{BODY}</div>
     <br/>
@@ -39,11 +43,14 @@
 </div>
 </body>
 <footer class="margin-offset">{FOOTER}</footer>
-<script src="../../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../../js/jquery-3.3.1.min.js"></script>
+<script src="../../js/js.cookie.js"></script>
+<script src="../../js/utils.js"></script>
 <script src="../../js/toggle-overlay.js"></script>
 <script src="../../js/version.js"></script>
 <script src="../../js/packet-ids.js"></script>
 <script src="../../js/send-packet-async.js"></script>
+<script src="../../js/boolean-utils.js"></script>
 <script>
     $(document).ready(function () {
         $("#loading").height("0%");

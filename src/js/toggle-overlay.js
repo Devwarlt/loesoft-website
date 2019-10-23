@@ -5,7 +5,7 @@
 function toggleOverlay(target) {
     var overlay = document.getElementById(target);
     var display = overlay.style.display;
-    overlay.style.display = display === "none" ? "block" : "none";
+    overlay.style.display = display === "none" ? "flex" : "none";
 }
 
 /***
@@ -13,7 +13,7 @@ function toggleOverlay(target) {
  * @param target
  */
 function showOverlay(target) {
-    document.getElementById(target).style.display = "block";
+    document.getElementById(target).style.display = "flex";
 }
 
 /***

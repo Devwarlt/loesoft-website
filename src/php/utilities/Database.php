@@ -61,27 +61,21 @@ final class Database
     /***
      * Execute an update query on database.
      * @param $sql : SQL query.
-     * @param null $params : (optional) extra parameters along $sql.
      * @return bool
      */
-    public function update($sql, $params = null)
+    public function update($sql)
     {
-        return $this->insert($sql, $params);
+        return $this->insert($sql);
     }
 
     /***
      * Execute an insert query on database.
      * @param $sql : SQL query.
-     * @param array|null $params : (optional) extra parameters along $sql.
      * @return bool
      */
-    public function insert($sql, array $params = null)
+    public function insert($sql)
     {
         $query = self::$connection->prepare($sql);
-
-        if ($params !== null)
-            foreach ($params as $key => $value)
-                $query->bindParam($key, $value);
 
         return $query->execute();
     }
@@ -89,32 +83,26 @@ final class Database
     /***
      * Execute a delete query on database.
      * @param $sql : SQL query.
-     * @param array|null $params : (optional) extra parameters along $sql.
      * @return bool
      */
-    public function delete($sql, array $params = null)
+    public function delete($sql)
     {
-        return $this->insert($sql, $params);
+        return $this->insert($sql);
     }
 
     /***
      * Execute a select query on database and returns a **PDOStatement** to being used at fetch response.
      * @internal This method can result in invalidation in case of invalid query along execute (PDO).
      * @param $sql : SQL Query.
-     * @param array|null $params : (optional) extra parameters along $sql.
-     * @return null|\PDOStatement
+     * @return \PDOStatement
      */
-    public function select($sql, array $params = null)
+    public function select($sql)
     {
         $query = self::$connection->query($sql);
-
-        if ($params !== null)
-            foreach ($params as $key => $value)
-                $query->bindParam($key, $value);
 
         if ($query->execute() && $query->rowCount() > 0)
             return $query;
 
-        return null;
+        return $query;
     }
 }

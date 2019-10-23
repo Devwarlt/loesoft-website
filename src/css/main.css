@@ -1,14 +1,47 @@
+:root {
+    /* shades */
+    --ws-shade-color-1: #8B0000;
+    --ws-shade-color-2: #FFA50022;
+    --ws-shade-color-3: #FF8C0066;
+    --ws-shade-color-4: #FF8C009F;
+    --ws-shade-color-5: #FFA500;
+
+    /* text */
+    --ws-text-font-family: Tahoma, Geneva, sans-serif;
+
+    /* backgrounds */
+    --ws-background-color-1: #000000;
+    --ws-background-color-1-overlay: #000000AB;
+    --ws-background-color-2: #121212;
+    --ws-background-color-2-overlay: #121212AB;
+    --ws-background-color-3: #242424;
+    --ws-background-color-3-overlay: #242424AB;
+    --ws-background-color-4: #363636;
+    --ws-background-color-4-overlay: #363636AB;
+    --ws-background-color-5: #484848;
+    --ws-background-color-5-overlay: #484848AB;
+    --ws-background-color-6: #565656;
+    --ws-background-color-6-overlay: #565656AB;
+    --ws-background-color-7: #646464;
+    --ws-background-color-7-overlay: #646464AB;
+
+    /* button */
+    --ws-button-color: white;
+    --ws-button-border-radius: .25em;
+
+    /* side bar */
+    --ws-side-bar-offset-margin: 200px;
+}
+
 html {
     margin: 0;
     padding: 0;
-    background-color: black;
-    font-family: Tahoma, Geneva, sans-serif;
-    color: orange;
-}
-
-table, th, td {
-    text-align: left;
-    padding: 10px;
+    background-color: var(--ws-background-color-1);
+    font-family: var(--ws-text-font-family);
+    color: var(--ws-shade-color-5);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 a:link {
@@ -16,30 +49,61 @@ a:link {
     font-weight: bold;
 }
 
-.center {
-    margin: auto;
-    width: 80%;
-    padding: 10px;
-}
-
-.margin-offset {
-    margin-left: 200px;
-}
-
-.body {
-    color: #FF8C009F;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-hr.footer {
-    border-top: 3px solid #FF45009F;
+hr {
+    border-top: 3px solid var(--ws-shade-color-4);
 }
 
 button {
-    border: 1px solid orange;
-    background-color: black;
-    color: white;
-    border-radius: .25em;
+    border: 1px solid var(--ws-shade-color-4);
+    background-color: var(--ws-background-color-1);
+    color: var(--ws-button-color);
+    border-radius: var(--ws-button-border-radius);
+    cursor: pointer;
+}
+
+button:hover {
+    font-weight: bold;
+    background-color: var(--ws-shade-color-1);
+    color: var(--ws-shade-color-5);
+}
+
+input {
+    text-align: center;
+    border: 1px solid var(--ws-shade-color-3);
+    background-color: var(--ws-background-color-1);
+    color: var(--ws-shade-color-5);
+    border-radius: var(--ws-button-border-radius);
+    cursor: auto;
+}
+
+input:hover {
+    background-color: var(--ws-shade-color-2);
+}
+
+::placeholder {
+    color: var(--ws-shade-color-4);
+}
+
+table, th, td {
+    text-align: left;
+    padding: 10px;
+}
+
+table {
+    border-radius: var(--ws-button-border-radius);
+    border: 1px solid var(--ws-shade-color-3);
+    background-color: var(--ws-background-color-2);
+    box-shadow: 0 4px 8px 0 var(--ws-shade-color-2), 0 6px 20px 0 var(--ws-shade-color-2);
+}
+
+thead {
+    background-color: var(--ws-background-color-3);
+}
+
+th {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    border-radius: var(--ws-button-border-radius);
+    border: 1px solid var(--ws-background-color-4);
 }

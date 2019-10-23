@@ -5,6 +5,7 @@ namespace php\utilities;
 include "Database.php";
 include "Utils.php";
 
+use php\handlers\Debuggable;
 use \php\utilities\Database as db;
 use \php\utilities\Utils as utils;
 
@@ -28,17 +29,27 @@ final class DatabaseUtils
      * Check if account exists.
      * @param $username
      * @param $password
+     * @param $debug
      * @return bool
      */
-    public function isAccountExist($username, $password)
+    public function isAccountExist($username, $password, $debug)
     {
         $db = db::getSingleton();
-        $result =
-            $db->select("select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
-                array(
-                    ":username" => utils::getSha512Hash($username),
-                    ":password" => utils::getSha512Hash($password)
-                ));
+        $action = array(
+            "sql" => "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
+            "params" => array(
+                ":username" => $username,
+                ":password" => utils::getSha512Hash($password)
+            )
+        );
+        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
+        $result = $db->select($action["sql"]);
+        $rows = $result->rowCount();
+
+        $debug->autoDebug("SQL > " . $result->queryString);
+        $debug->autoDebug("username > " . $action["params"][":username"] . " (" . $username . ")");
+        $debug->autoDebug("password > " . $action["params"][":password"] . " (" . $password . ")");
+        $debug->autoDebug("rows > " . $rows);
 
         return $result !== null && $result->rowCount() == 1;
     }
@@ -52,14 +63,17 @@ final class DatabaseUtils
     public function getAccessLevelFromAccount($username, $password)
     {
         $db = db::getSingleton();
-        $result =
-            $db->select("select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
-                array(
-                    ":username" => $username,
-                    ":password" => $password
-                ));
+        $action = array(
+            "sql" => "select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
+            "params" => array(
+                ":username" => $username,
+                ":password" => $password
+            )
+        );
+        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
+        $result = $db->select($action["sql"]);
 
-        if ($result === null) return -1;
+        if ($result->rowCount() == 0) return -1;
 
         $account = $result->fetch(\PDO::FETCH_OBJ);
 
@@ -73,8 +87,7 @@ final class DatabaseUtils
     public function countNews()
     {
         $db = db::getSingleton();
-        $result =
-            $db->select("select count(`id`) as `count` from `news`");
+        $result = $db->select("select count(`id`) as `count` from `news`");
 
         if ($result === null) return 0;
 
@@ -87,17 +100,20 @@ final class DatabaseUtils
      * Gets all news.
      * @param $page
      * @param $limit
-     * @return null|\PDOStatement
+     * @return \PDOStatement
      */
     public function getNewsByLimit($page, $limit)
     {
         $db = db::getSingleton();
-        $result =
-            $db->select("select `id`, `creation`, `author_id`, `title`, `tags` from `news` limit :limit offset :offset",
-                array(
-                    ":limit" => $limit,
-                    ":offset" => ($page - 1) * $limit
-                ));
+        $action = array(
+            "sql" => "select `id`, `creation`, `author_id`, `title`, `tags` from `news` limit :limit offset :offset",
+            "params" => array(
+                ":limit" => $limit,
+                ":offset" => ($page - 1) * $limit
+            )
+        );
+        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
+        $result = $db->select($action["sql"]);
 
         return $result;
     }
@@ -105,16 +121,19 @@ final class DatabaseUtils
     /***
      * Gets news by id.
      * @param $id
-     * @return null|\PDOStatement
+     * @return \PDOStatement
      */
     public function getNewsContentById($id)
     {
         $db = db::getSingleton();
-        $result =
-            $db->select("select * from `news` where `id` = :id",
-                array(
-                    ":id" => $id
-                ));
+        $action = array(
+            "sql" => "select * from `news` where `id` = :id",
+            "params" => array(
+                ":id" => $id
+            )
+        );
+        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
+        $result = $db->select($action["sql"]);
 
         return $result;
     }
@@ -126,8 +145,7 @@ final class DatabaseUtils
     public function countChangeLogs()
     {
         $db = db::getSingleton();
-        $result =
-            $db->select("select count(`id`) as `count` from `changelogs`");
+        $result = $db->select("select count(`id`) as `count` from `changelogs`");
 
         if ($result === null) return 0;
 
@@ -140,17 +158,20 @@ final class DatabaseUtils
      * Gets all change logs.
      * @param $page
      * @param $limit
-     * @return null|\PDOStatement
+     * @return \PDOStatement
      */
     public function getChangeLogsByLimit($page, $limit)
     {
         $db = db::getSingleton();
-        $result =
-            $db->select("select * from `changelogs` limit :limit offset :offset",
-                array(
-                    ":limit" => $limit,
-                    ":offset" => ($page - 1) * $limit
-                ));
+        $action = array(
+            "sql" => "select * from `changelogs` limit :limit offset :offset",
+            "params" => array(
+                ":limit" => $limit,
+                ":offset" => ($page - 1) * $limit
+            )
+        );
+        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
+        $result = $db->select($action["sql"]);
 
         return $result;
     }

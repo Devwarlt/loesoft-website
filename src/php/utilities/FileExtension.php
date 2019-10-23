@@ -6,16 +6,14 @@
  * Time: 10:53
  */
 
-namespace php\utilities\file_extension;
+namespace php\utilities;
 
-
-final class FileExtension implements IFileExtension
+final class FileExtension
 {
-    private static $phpExtension;
-    private static $htmlExtension;
     const phpFormat = ".php";
     const htmlFormat = ".html";
-
+    private static $phpExtension;
+    private static $htmlExtension;
     private $format;
 
     public function __construct($format)

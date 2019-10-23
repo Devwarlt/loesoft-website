@@ -6,10 +6,9 @@
  * Time: 12:29
  */
 
-require_once "../utilities/Utils.php";
-require_once "../utilities/file_extension/FileExtension.php";
+include "../utilities/Utils.php";
 
 use php\utilities\Utils as utils;
-use php\utilities\file_extension\FileExtension as fe;
+use php\utilities\FileExtension as fe;
 
 utils::getTemplateFromFile("Page not found!", "404", fe::getHtmlExtension(), null, null, true);

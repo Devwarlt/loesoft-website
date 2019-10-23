@@ -8,13 +8,9 @@
 
 namespace php\handlers;
 
-include "../utilities/DateUtils.php";
-include "../utilities/Utils.php";
-include "../utilities/DatabaseUtils.php";
-
 use php\utilities\DateUtils as dutils;
-use php\utilities\Utils as utils;
 use php\utilities\DatabaseUtils as dbutils;
+use php\utilities\Utils as utils;
 
 define("LOGIN_USERNAME", "login-username-cookie");
 define("LOGIN_PASSWORD", "login-password-cookie");
@@ -39,24 +35,40 @@ final class LoginHandler implements IHandler
     /***
      * Handle a login message.
      * @param array $params
+     * @return string
      */
     public function handle(array $params)
     {
-        if ($this->isLoggedIn()) return;
+        $debug = $params["debug"];
+        $debug->autoTitle("[Login Handler]:");
 
-        $username = $params["username"];
-        $password = $params["password"];
-		$dbu = dbutils::getSingleton();
-		
-		if ($dbu->isAccountExist($username, $password))
-			$this->setLoginCookies($username, $password);
+        if (self::isLoggedIn()) {
+            $debug->autoDebug("Already logged in.");
+            return "invalid";
+        }
+
+        $username = utils::tryGetValue($params, "username");
+        $password = utils::tryGetValue($params, "password");
+        $dbu = dbutils::getSingleton();
+
+        $debug->skip();
+
+        if ($dbu->isAccountExist($username, $password, $debug)) {
+            $debug->autoDebug("Account found!");
+            $this->setLoginCookies($username, $password);
+            return "true";
+        }
+
+        $debug->skip();
+        $debug->autoDebug("Account not found!");
+        return "false";
     }
 
     /***
      * Verify if user is already logged in.
      * @return bool
      */
-    private function isLoggedIn()
+    public static function isLoggedIn()
     {
         return array_key_exists(LOGIN_USERNAME, $_COOKIE) && array_key_exists(LOGIN_PASSWORD, $_COOKIE);
     }
@@ -68,10 +80,10 @@ final class LoginHandler implements IHandler
      */
     private function setLoginCookies($username, $password)
     {
-        $expire = dutils::getCurrentTimeAddition(dutils::getHour());
+        $expire = dutils::getCurrentTimeAddition(dutils::hour);
         $path = "/";
 
         setcookie(LOGIN_USERNAME, $username, $expire, $path);
-        setcookie(LOGIN_PASSWORD, $password, $expire, $path);
+        setcookie(LOGIN_PASSWORD, utils::getSha512Hash($password), $expire, $path);
     }
 }

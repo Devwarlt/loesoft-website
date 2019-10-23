@@ -2,8 +2,79 @@
     Welcome to the <strong>LoESoft Games</strong> official developer blog! Here you'll find all change-logs, patch notes
     and related documentations about our side projects.
 </p>
-<div id="login" class="overlay overlay-content" onclick="hideOverlay('login')">
+<div id="result-content" class="overlay overlay-content center-element">
     <table>
-        <tbody></tbody>
+        <tbody>
+        <tr>
+            <td id="result"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="logout" class="overlay overlay-content center-element">
+    <table>
+        <thead>
+        <tr>
+            <th><h2>Logout</h2></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="text-center">Are you sure you want to <strong>logout</strong>?</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td rowspan="2">
+                <div class="relative-center">
+                    <div style="width: 50%; margin: 5%;">
+                        <button id="logout-btn" style="padding: 2%; width: 100%;" type="button"
+                                onclick="sendLogoutPacket()">Yes
+                        </button>
+                    </div>
+                    <div style="width: 50%; margin: 5%;">
+                        <button style="padding: 2%; width: 100%;" type="button" onclick="hideOverlay('logout')">No
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<div id="login" class="overlay overlay-content center-element">
+    <table>
+        <thead>
+        <tr>
+            <th colspan="2"><h2>Login</h2></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="text-right"><label><strong>Username</strong></label></td>
+            <td><input id="username" type="text" placeholder="username"/></td>
+        </tr>
+        <tr>
+            <td class="text-right"><label><strong>Password</strong></label></td>
+            <td><input id="password" type="password" placeholder="password"/></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="2" rowspan="2">
+                <div class="relative-center">
+                    <div style="width: 50%; margin: 5%;">
+                        <button id="login-btn" style="padding: 2%; width: 100%;" type="button"
+                                onclick="sendLoginPacket()">Login
+                        </button>
+                    </div>
+                    <div style="width: 50%; margin: 5%;">
+                        <button style="padding: 2%; width: 100%;" type="button" onclick="hideOverlay('login')">Cancel
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
     </table>
 </div>

@@ -8,9 +8,6 @@
 
 namespace php\handlers;
 
-include "../utilities/Utils.php";
-include "../utilities/Database.php";
-
 use php\utilities\Utils as utils;
 use php\utilities\Database as db;
 
@@ -41,9 +38,10 @@ final class RegisterHandler implements IHandler
         $username = $params["username"];
         $password = $params["password"];
 
-        if (utils::IsNullOrEmptyString($username) || utils::IsNullOrEmptyString($password)) return false;
+        if (utils::isNullOrEmpty($username) || utils::isNullOrEmpty($password)) return false;
 
         $db = db::getSingleton();
+
         return $db->insert("insert into accounts (username, password) values (':username', ':password')",
             array(
                 ":username" => utils::getSha512Hash($username),

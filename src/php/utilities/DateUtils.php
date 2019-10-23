@@ -12,9 +12,9 @@ namespace php\utilities;
 final class DateUtils
 {
     const second = 1;
-    const minute = 1 * 60;
-    const hour = 1 * 60 * 60;
-    const day = 1 * 24 * 60 * 60;
+    const minute = 60;
+    const hour = 3600;
+    const day = 86400;
 
     /***
      * Gets a current server time in seconds with additional second.

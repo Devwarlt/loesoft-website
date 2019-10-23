@@ -1,0 +1,48 @@
+.center-element {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.center-button {
+    display: block;
+    margin: auto;
+}
+
+.center {
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+}
+
+.margin-offset {
+    margin-left: var(--ws-side-bar-offset-margin);
+}
+
+.body {
+    color: var(--ws-shade-color-4);
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.relative-center {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    width: 100%;
+}
