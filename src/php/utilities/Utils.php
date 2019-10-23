@@ -55,10 +55,14 @@ final class Utils
      */
     public static function getTemplateFromFile($title, $contentPath, FileExtension $extension, $css = null, $script = null, $is404 = false, $loggedIn = false)
     {
+        $relativePath = "../assets/contents/$contentPath";
+
         $assetBundle = array(
             "template" => self::getContents("../template/page_body.html"),
             "title" => $title,
-            "body" => self::getContents("../assets/contents/$contentPath" . $extension->getExtension()),
+            "body" => $extension->getExtension() === FileExtension::htmlFormat ?
+                self::getContents("$relativePath.html") :
+                self::getPhpContents("$relativePath.php"),
             "footer" => self::getContents("../template/page_footer.html"),
             "css" => $css !== null ? self::getContents("../assets/stylesheets/$css.css", "style") : "",
             "script" => $script !== null ? self::getContents("../assets/scripts/$script.js", "script") : "",
@@ -90,6 +94,20 @@ final class Utils
         $result = file_get_contents($file);
 
         return $tag !== null ? "<" . $tag . ">" . $result . "</" . $tag . ">" : $result;
+    }
+
+    /***
+     * Execute a PHP file on server-side.
+     * @param $path
+     * @return mixed
+     */
+    private static function getPhpContents($path)
+    {
+        $file = dirname(__FILE__) . "/$path";
+
+        if (!file_exists($file)) echo "<p style='color: red'><strong>File doesn't exist:</strong> " . dirname(__FILE__) . "/$path</p>";
+
+        return require($file);
     }
 
     /***
