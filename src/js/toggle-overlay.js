@@ -3,5 +3,7 @@ function showOverlay(target) {
 }
 
 function hideOverlay(target) {
-    document.getElementById(target).style.display = "none";
+    $("#" + target).fadeOut("slow", function () {
+        document.getElementById(target).style.display = "none";
+    });
 }

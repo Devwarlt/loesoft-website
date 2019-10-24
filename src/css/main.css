@@ -67,8 +67,12 @@ button:hover {
     color: var(--ws-shade-color-5);
 }
 
-input {
+input, select, textarea::placeholder {
     text-align: center;
+}
+
+input, select, textarea, option {
+    width: 100%;
     border: 1px solid var(--ws-shade-color-3);
     background-color: var(--ws-background-color-1);
     color: var(--ws-shade-color-5);
@@ -76,7 +80,15 @@ input {
     cursor: auto;
 }
 
-input:hover {
+select {
+    text-align-last: center;
+}
+
+option {
+    color: var(--ws-shade-color-4)
+}
+
+input:hover, textarea:hover, select:hover {
     background-color: var(--ws-shade-color-2);
 }
 

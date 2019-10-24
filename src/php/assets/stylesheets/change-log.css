@@ -32,3 +32,7 @@
 .change-log-author, .change-log-edited {
     text-align: right;
 }
+
+.change-log-header {
+    display: inline-block; /* display: none */
+}

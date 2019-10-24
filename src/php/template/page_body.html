@@ -61,12 +61,12 @@
                 <td rowspan="2">
                     <div class="relative-center">
                         <div style="width: 50%; margin: 5%;">
-                            <button id="logout-btn" style="padding: 2%; width: 100%;" type="button"
+                            <button id="logout-btn" style="width: 100%; padding: 2%;" type="button"
                                     onclick="sendLogoutPacket()">Yes
                             </button>
                         </div>
                         <div style="width: 50%; margin: 5%;">
-                            <button style="padding: 2%; width: 100%;" type="button" onclick="hideOverlay('logout')">No
+                            <button style="width: 100%; padding: 2%;" onclick="hideOverlay('logout')">No
                             </button>
                         </div>
                     </div>
@@ -97,12 +97,12 @@
                 <td colspan="2" rowspan="2">
                     <div class="relative-center">
                         <div style="width: 50%; margin: 5%;">
-                            <button id="login-btn" style="padding: 2%; width: 100%;" type="button"
+                            <button id="login-btn" style="width: 100%; padding: 2%;" type="button"
                                     onclick="sendLoginPacket()">Login
                             </button>
                         </div>
                         <div style="width: 50%; margin: 5%;">
-                            <button style="padding: 2%; width: 100%;" type="button" onclick="hideOverlay('login')">
+                            <button style="width: 100%; padding: 2%;" type="button" onclick="hideOverlay('login')">
                                 Cancel
                             </button>
                         </div>
@@ -129,6 +129,7 @@
 <script src="../../js/send-packet-async.js"></script>
 <script src="../../js/boolean-utils.js"></script>
 <script src="../../js/login.js"></script>
+<script src="../../js/change-log.js"></script>
 <script>
     $(document).ready(function () {
         $("#loading").height("0%");
@@ -136,5 +137,4 @@
         $("#version").html(version);
     });
 </script>
-{SCRIPT}
 </html>

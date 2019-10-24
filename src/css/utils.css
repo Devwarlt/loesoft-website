@@ -21,6 +21,7 @@
 }
 
 .body {
+    padding-left: 64px;
     color: var(--ws-shade-color-4);
 }
 
@@ -38,6 +39,11 @@
 
 .text-right {
     text-align: right;
+}
+
+.footer {
+    margin-left: 24px;
+    margin-right: 24px;
 }
 
 .relative-center {

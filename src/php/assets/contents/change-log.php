@@ -18,33 +18,37 @@ if ($lastPage == 0) $lastPage = 1;
 if ($page > $lastPage) $page = $lastPage;
 
 $result = "<div>There is no change log published yet.</div>";
-$changeLogs = array(
-    new cl(1, "1.0", cl::clientType, date("d/m/Y HH:i:s"), date("d/m/Y HH:i:s"), 1, 1, "This is a sample text."),
-    new cl(2, "1.0", cl::serverType, date("d/m/Y HH:i:s"), date("d/m/Y HH:i:s"), 1, 1, "This is a sample text."),
-    new cl(3, "1.0", cl::websiteType, date("d/m/Y HH:i:s"), date("d/m/Y HH:i:s"), 1, 1, "This is a sample text.")
-);//$dbu->getChangeLogsByLimit($page, $limit);
-$template = utils::getContents("../assets/contents/change-log-template.html");
+$changeLogs = $dbu->getChangeLogsByLimit($page, $limit);
+$scope = utils::getContents("../assets/contents/change-log-scope.html");
+$entry = utils::getContents("../assets/contents/change-log-entry.html");
 
-if (count($changeLogs) > 0) {
+if ($changeLogs->rowCount() > 0) {
     $result = "<table style='width: 100%;'><tbody>";
 
-    foreach ($changeLogs as $changeLog)
-        $result .= utils::replaceArray($template, array(
-            "{ICON_TYPE}" => $changeLog->getType(),
-            "{VERSION}" => $changeLog->getVersion(),
-            "{TEXT}" => $changeLog->getContent(),
-            "{AUTHOR}" => $changeLog->getAuthorId(),
-            "{CREATION_DATE}" => $changeLog->getCreation(),
-            "{DISPLAY}" => $changeLog->isChangeLogEdited() ? "block" : "none",
-            "{EDITOR}" => $changeLog->getReviewerId(),
-            "{EDITION_DATE}" => $changeLog->getEdited()
+    while ($changeLog = $changeLogs->fetch(PDO::FETCH_OBJ)) {
+        $cl = new cl(
+            $changeLog->id,
+            $changeLog->version,
+            $changeLog->type,
+            $changeLog->creation,
+            $changeLog->edited,
+            $changeLog->author_id,
+            $changeLog->reviewer_id,
+            $changeLog->content
+        );
+        $result .= utils::replaceArray($entry, array(
+            "{ICON_TYPE}" => $cl->getType(),
+            "{VERSION}" => $cl->getVersion(),
+            "{TEXT}" => $cl->getContent(),
+            "{AUTHOR}" => $cl->getAuthorId(),
+            "{CREATION_DATE}" => $cl->getCreation(),
+            "{DISPLAY}" => $cl->isChangeLogEdited() ? "block" : "none",
+            "{EDITOR}" => $cl->getReviewerId(),
+            "{EDITION_DATE}" => $cl->getEdited()
         ));
+    }
 
     $result .= "</tbody></table>";
 }
 
-/*while ($changeLog = $changeLogs->fetch(PDO::FETCH_OBJ)) {
-    $result .= "";
-}*/
-
-return $result;
+return $scope . "<br /><br />" . $result;

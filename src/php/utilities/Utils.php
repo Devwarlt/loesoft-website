@@ -22,7 +22,6 @@ final class Utils
         "body" => "{BODY}",
         "footer" => "{FOOTER}",
         "css" => "{CSS}",
-        "script" => "{SCRIPT}",
         "404" => "{404}",
         "login" => "{LOGIN}"
     );
@@ -52,9 +51,8 @@ final class Utils
      * @param null $css : (optional) css that will be embedded into page template.
      * @param $is404 : (optional) replace **{PAGE}** string key to current targeted page.
      * @param $loggedIn : (optional) replace **{LOGIN}** string key to current log-in definition.
-     * @param null $script : (optional) javascript / jQuery script that will be embedded into page template.
      */
-    public static function getTemplateFromFile($title, $contentPath, $extension, $css = null, $script = null, $is404 = false, $loggedIn = false)
+    public static function getTemplateFromFile($title, $contentPath, $extension, $css = null, $is404 = false, $loggedIn = false)
     {
         $relativePath = "../assets/contents/$contentPath";
         $assetBundle = array(
@@ -65,7 +63,6 @@ final class Utils
                 self::getPhpContents("$relativePath.php"),
             "footer" => self::getContents("../template/page_footer.html"),
             "css" => $css !== null ? self::getContents("../assets/stylesheets/$css.css", "style") : "",
-            "script" => $script !== null ? self::getContents("../assets/scripts/$script.js", "script") : "",
             "404" => $is404 ? self::getRelativeLocationHref() : "unknown",
             "login" => $loggedIn ? "<a id=\"logout-option\" onclick=\"showOverlay('logout')\">Logout</a>" : "<a id=\"login-option\" onclick=\"showOverlay('login')\">Login</a>"
         );

@@ -43,16 +43,24 @@ function sendLoginPacket() {
     });
 }
 
-function sendLogoutPacket() {
-    var btn = $("#logout-btn");
-    var cookies = {
+function isLoggedIn() {
+    var credentials = getLoginCredentials();
+
+    return !(isNullOrEmpty(credentials.username) && isNullOrEmpty(credentials.password));
+}
+
+function getLoginCredentials() {
+    return {
         username: Cookies.get(loginUsernameCookie),
         password: Cookies.get(loginPasswordCookie)
     };
+}
 
+function sendLogoutPacket() {
+    var btn = $("#logout-btn");
     btn.attr("disabled", true);
 
-    if (isNullOrEmpty(cookies.username) && isNullOrEmpty(cookies.password))
+    if (!isLoggedIn())
         onLogoutInternalError(btn, "You aren't logged in to perform a logout!<hr />");
     else {
         Cookies.remove(loginUsernameCookie);

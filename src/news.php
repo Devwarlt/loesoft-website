@@ -13,4 +13,4 @@ use php\utilities\Utils as utils;
 use php\handlers\LoginHandler as login;
 
 al::register();
-utils::getTemplateFromFile("News", "news", utils::phpFormat, null, null, false, login::isLoggedIn());
+utils::getTemplateFromFile("News", "news", utils::phpFormat, null, false, login::isLoggedIn());

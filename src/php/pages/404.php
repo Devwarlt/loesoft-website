@@ -13,4 +13,4 @@ include "../handlers/LoginHandler.php";
 use php\utilities\Utils as utils;
 use php\handlers\LoginHandler as login;
 
-utils::getTemplateFromFile("Page not found!", "404", utils::htmlFormat, null, null, true, login::isLoggedIn());
+utils::getTemplateFromFile("Page not found!", "404", utils::htmlFormat, null, true, login::isLoggedIn());
