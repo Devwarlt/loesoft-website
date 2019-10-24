@@ -8,7 +8,6 @@
 
 namespace php\utilities;
 
-
 final class DateUtils
 {
     const second = 1;

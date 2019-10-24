@@ -6,8 +6,6 @@
  * Time: 11:20
  */
 
-include "PacketManager.php";
-
 use php\handlers\PacketManager as pm;
 
 $pm = pm::getSingleton();

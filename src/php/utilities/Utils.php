@@ -8,10 +8,11 @@
 
 namespace php\utilities;
 
-include "FileExtension.php";
-
 final class Utils
 {
+    const phpFormat = ".php";
+    const htmlFormat = ".html";
+
     /***
      * Contains a collection of keys used in file templates.
      * @var array
@@ -53,14 +54,13 @@ final class Utils
      * @param $loggedIn : (optional) replace **{LOGIN}** string key to current log-in definition.
      * @param null $script : (optional) javascript / jQuery script that will be embedded into page template.
      */
-    public static function getTemplateFromFile($title, $contentPath, FileExtension $extension, $css = null, $script = null, $is404 = false, $loggedIn = false)
+    public static function getTemplateFromFile($title, $contentPath, $extension, $css = null, $script = null, $is404 = false, $loggedIn = false)
     {
         $relativePath = "../assets/contents/$contentPath";
-
         $assetBundle = array(
             "template" => self::getContents("../template/page_body.html"),
             "title" => $title,
-            "body" => $extension->getExtension() === FileExtension::htmlFormat ?
+            "body" => $extension === self::htmlFormat ?
                 self::getContents("$relativePath.html") :
                 self::getPhpContents("$relativePath.php"),
             "footer" => self::getContents("../template/page_footer.html"),

@@ -8,7 +8,6 @@
 
 namespace php\handlers;
 
-
 final class PacketId
 {
     const login = 1;

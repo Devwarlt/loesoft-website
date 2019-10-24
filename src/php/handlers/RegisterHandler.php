@@ -11,7 +11,6 @@ namespace php\handlers;
 use php\utilities\Utils as utils;
 use php\utilities\Database as db;
 
-
 final class RegisterHandler implements IHandler
 {
     private static $singleton;

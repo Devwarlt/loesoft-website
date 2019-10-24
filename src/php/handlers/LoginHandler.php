@@ -15,7 +15,6 @@ use php\utilities\Utils as utils;
 define("LOGIN_USERNAME", "login-username-cookie");
 define("LOGIN_PASSWORD", "login-password-cookie");
 
-
 final class LoginHandler implements IHandler
 {
     private static $singleton;

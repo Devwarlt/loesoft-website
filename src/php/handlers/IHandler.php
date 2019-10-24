@@ -8,7 +8,6 @@
 
 namespace php\handlers;
 
-
 interface IHandler
 {
     public static function getSingleton();

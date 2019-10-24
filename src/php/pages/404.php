@@ -6,9 +6,10 @@
  * Time: 12:29
  */
 
-include "../utilities/Utils.php";
+include "php/utilities/AutoLoader.php";
 
+use php\utilities\AutoLoader as al;
 use php\utilities\Utils as utils;
-use php\utilities\FileExtension as fe;
 
-utils::getTemplateFromFile("Page not found!", "404", fe::getHtmlExtension(), null, null, true);
+al::register();
+utils::getTemplateFromFile("Page not found!", "404", utils::htmlFormat, null, null, true);

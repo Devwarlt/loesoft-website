@@ -6,12 +6,11 @@
  * Time: 19:24
  */
 
-include "php/utilities/Utils.php";
-include "php/handlers/IHandler.php";
-include "php/handlers/LoginHandler.php";
+include "php/utilities/AutoLoader.php";
 
+use php\utilities\AutoLoader as al;
 use php\utilities\Utils as utils;
-use php\utilities\FileExtension as fe;
 use php\handlers\LoginHandler as login;
 
-utils::getTemplateFromFile("Change Log", "change-log", fe::getPhpExtension(), null, null, false, login::isLoggedIn());
+al::register();
+utils::getTemplateFromFile("Change Log", "change-log", utils::phpFormat, null, null, false, login::isLoggedIn());

@@ -8,7 +8,6 @@
 
 namespace php\handlers;
 
-
 trait Debuggable
 {
     function skip()

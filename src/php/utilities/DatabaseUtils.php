@@ -2,12 +2,8 @@
 
 namespace php\utilities;
 
-include "Database.php";
-include "Utils.php";
-
-use php\handlers\Debuggable;
-use \php\utilities\Database as db;
-use \php\utilities\Utils as utils;
+use php\utilities\Database as db;
+use php\utilities\Utils as utils;
 
 final class DatabaseUtils
 {

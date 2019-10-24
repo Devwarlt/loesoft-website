@@ -1,10 +1,9 @@
 <?php
-include "php/utilities/Utils.php";
-include "php/handlers/IHandler.php";
-include "php/handlers/LoginHandler.php";
+include "php/utilities/AutoLoader.php";
 
+use php\utilities\AutoLoader as al;
 use php\utilities\Utils as utils;
-use php\utilities\FileExtension as fe;
 use php\handlers\LoginHandler as login;
 
-utils::getTemplateFromFile("Home", "home", fe::getHtmlExtension(), null, "home", false, login::isLoggedIn());
+al::register();
+utils::getTemplateFromFile("Home", "home", utils::htmlFormat, null, "home", false, login::isLoggedIn());

@@ -8,14 +8,6 @@
 
 namespace php\handlers;
 
-include "../utilities/DateUtils.php";
-include "../utilities/DatabaseUtils.php";
-include "PacketId.php";
-include "IHandler.php";
-include "LoginHandler.php";
-include "RegisterHandler.php";
-include "Debuggable.php";
-
 use php\handlers\PacketId as pid;
 use php\handlers\LoginHandler as login;
 use php\handlers\RegisterHandler as register;
