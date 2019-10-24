@@ -1,0 +1,34 @@
+.change-log-entry {
+    margin: 2px;
+    padding: 4px;
+    border: 1px solid var(--ws-shade-color-3);
+    border-radius: var(--ws-button-border-radius);
+    background-color: var(--ws-background-color-1);
+}
+
+.change-log-icon, .change-log-version {
+    display: inline-table;
+    border: 1px solid var(--ws-shade-color-3);
+    border-radius: var(--ws-button-border-radius);
+}
+
+.change-log-icon {
+    background-color: var(--ws-background-color-4);
+}
+
+.change-log-version {
+    background-color: var(--ws-background-color-2);
+    color: var(--ws-shade-color-5);
+}
+
+.change-log-text {
+    display: inline-table;
+}
+
+.change-log-author {
+    padding-top: 4px;
+}
+
+.change-log-author, .change-log-edited {
+    text-align: right;
+}

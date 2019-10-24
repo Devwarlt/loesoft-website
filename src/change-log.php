@@ -13,4 +13,4 @@ use php\utilities\Utils as utils;
 use php\handlers\LoginHandler as login;
 
 al::register();
-utils::getTemplateFromFile("Change Log", "change-log", utils::phpFormat, null, null, false, login::isLoggedIn());
+utils::getTemplateFromFile("Change Log", "change-log", utils::phpFormat, "change-log", null, false, login::isLoggedIn());

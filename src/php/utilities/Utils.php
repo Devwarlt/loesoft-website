@@ -13,7 +13,7 @@ final class Utils
     const phpFormat = ".php";
     const htmlFormat = ".html";
 
-    /***
+    /**
      * Contains a collection of keys used in file templates.
      * @var array
      */
@@ -27,7 +27,7 @@ final class Utils
         "login" => "{LOGIN}"
     );
 
-    /***
+    /**
      * Contains a collect of default keys used in file templates.
      * @var array
      */
@@ -44,7 +44,7 @@ final class Utils
         "{OG_IMAGE_HEIGHT}" => "148"
     );
 
-    /***
+    /**
      * Echo a formatted file based in template and local file path.
      * @param $title : title of page.
      * @param $contentPath : exist file from local resources.
@@ -79,13 +79,13 @@ final class Utils
         echo $assetBundle["template"];
     }
 
-    /***
+    /**
      * Returns a string based on local path from folder **src/php**
      * @param $path : exist file from local resources.
      * @param null $tag : (optional) auto-format contents adding tags.
      * @return string
      */
-    private static function getContents($path, $tag = null)
+    public static function getContents($path, $tag = null)
     {
         $file = dirname(__FILE__) . "/$path";
 
@@ -96,7 +96,7 @@ final class Utils
         return $tag !== null ? "<" . $tag . ">" . $result . "</" . $tag . ">" : $result;
     }
 
-    /***
+    /**
      * Execute a PHP file on server-side.
      * @param $path
      * @return mixed
@@ -110,7 +110,7 @@ final class Utils
         return require($file);
     }
 
-    /***
+    /**
      * Returns a formatted string that contains relative location href requested by client.
      * @return string
      */
@@ -125,7 +125,7 @@ final class Utils
         return $location;
     }
 
-    /***
+    /**
      * Returns an overridden **string** replaced with values based on template.
      * @param $key
      * @param $value
@@ -137,7 +137,7 @@ final class Utils
         return str_replace($key, $value, $template);
     }
 
-    /***
+    /**
      * Gets a hash value from SHA512 algorithm.
      * @param $value
      * @return string
@@ -147,7 +147,7 @@ final class Utils
         return hash('sha512', $value);
     }
 
-    /***
+    /**
      * Verify if string is null or empty.
      * @param $value
      * @return bool
@@ -157,7 +157,7 @@ final class Utils
         return $value === null || empty($value);
     }
 
-    /***
+    /**
      * Try to get a value from dictionary based on key entry.
      * @param array $dictionary
      * @param $key
@@ -176,7 +176,7 @@ final class Utils
         return null;
     }
 
-    /***
+    /**
      * Replace full string params.
      * @param $value
      * @param array $array

@@ -9,7 +9,7 @@ final class DatabaseUtils
 {
     private static $singleton;
 
-    /***
+    /**
      * Gets a singleton-like instance of **DatabaseUtils** class.
      * @return DatabaseUtils
      */
@@ -21,7 +21,7 @@ final class DatabaseUtils
         return self::$singleton;
     }
 
-    /***
+    /**
      * Check if account exists.
      * @param $username
      * @param $password
@@ -50,7 +50,7 @@ final class DatabaseUtils
         return $result !== null && $result->rowCount() == 1;
     }
 
-    /***
+    /**
      * Gets account level from account credentials.
      * @param $username
      * @param $password
@@ -76,7 +76,7 @@ final class DatabaseUtils
         return $account->access_level;
     }
 
-    /***
+    /**
      * Count amount of news.
      * @return int|mixed
      */
@@ -92,7 +92,7 @@ final class DatabaseUtils
         return $query->count;
     }
 
-    /***
+    /**
      * Gets all news.
      * @param $page
      * @param $limit
@@ -114,7 +114,7 @@ final class DatabaseUtils
         return $result;
     }
 
-    /***
+    /**
      * Gets news by id.
      * @param $id
      * @return \PDOStatement
@@ -134,7 +134,7 @@ final class DatabaseUtils
         return $result;
     }
 
-    /***
+    /**
      * Count amount of change logs.
      * @return int|mixed
      */
@@ -150,7 +150,7 @@ final class DatabaseUtils
         return $query->count;
     }
 
-    /***
+    /**
      * Gets all change logs.
      * @param $page
      * @param $limit

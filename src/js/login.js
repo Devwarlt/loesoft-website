@@ -69,7 +69,7 @@ function toggleResult(target) {
 
 function onLoginSuccess() {
     $("#result").html(
-        "<div class='text-center'><img src='../../../media/loading.gif' width='48px' height='48px'><h2>Loading, please wait...</h2><br /></div>" +
+        "<div class='text-center'><img src='../media/loading.gif' width='48px' height='48px'><h2>Loading, please wait...</h2><br /></div>" +
         "You have successfully performed a login of your account, please wait while you are being redirected to main page...<hr />"
     );
 
@@ -103,7 +103,7 @@ function onLogoutSuccess() {
     showOverlay("result-content");
 
     $("#result").html(
-        "<div class='text-center'><img src='../../../media/loading.gif' width='48px' height='48px'><h2>Loading, please wait...</h2><br /></div>" +
+        "<div class='text-center'><img src='../media/loading.gif' width='48px' height='48px'><h2>Loading, please wait...</h2><br /></div>" +
         "You have successfully performed a logout of your account, please wait while you are being redirected to main page...<hr />"
     );
 

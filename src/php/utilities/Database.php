@@ -18,7 +18,7 @@ final class Database
     private static $singleton;
     private static $connection;
 
-    /***
+    /**
      * Database constructor.
      * @param \PDO $connection
      */
@@ -27,7 +27,7 @@ final class Database
         self::$connection = $connection;
     }
 
-    /***
+    /**
      * Gets the singleton-like instance of **Database**.
      * @return Database
      */
@@ -39,7 +39,7 @@ final class Database
         return self::$singleton;
     }
 
-    /***
+    /**
      * Execute an update query on database.
      * @param $sql : SQL query.
      * @return bool
@@ -49,7 +49,7 @@ final class Database
         return $this->insert($sql);
     }
 
-    /***
+    /**
      * Execute an insert query on database.
      * @param $sql : SQL query.
      * @return bool
@@ -61,7 +61,7 @@ final class Database
         return $query->execute();
     }
 
-    /***
+    /**
      * Execute a delete query on database.
      * @param $sql : SQL query.
      * @return bool
@@ -71,7 +71,7 @@ final class Database
         return $this->insert($sql);
     }
 
-    /***
+    /**
      * Execute a select query on database and returns a **PDOStatement** to being used at fetch response.
      * @internal This method can result in invalidation in case of invalid query along execute (PDO).
      * @param $sql : SQL Query.

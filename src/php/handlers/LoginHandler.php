@@ -19,7 +19,7 @@ final class LoginHandler implements IHandler
 {
     private static $singleton;
 
-    /***
+    /**
      * Gets a singleton-like instance of **LoginHandler** class.
      * @return LoginHandler
      */
@@ -31,7 +31,7 @@ final class LoginHandler implements IHandler
         return self::$singleton;
     }
 
-    /***
+    /**
      * Handle a login message.
      * @param array $params
      * @return string
@@ -63,7 +63,7 @@ final class LoginHandler implements IHandler
         return "false";
     }
 
-    /***
+    /**
      * Verify if user is already logged in.
      * @return bool
      */
@@ -72,7 +72,7 @@ final class LoginHandler implements IHandler
         return array_key_exists(LOGIN_USERNAME, $_COOKIE) && array_key_exists(LOGIN_PASSWORD, $_COOKIE);
     }
 
-    /***
+    /**
      * Set current login session cookies.
      * @param $username
      * @param $password

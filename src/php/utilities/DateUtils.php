@@ -15,7 +15,7 @@ final class DateUtils
     const hour = 3600;
     const day = 86400;
 
-    /***
+    /**
      * Gets a current server time in seconds with additional second.
      * @param $seconds
      * @return int
@@ -25,7 +25,7 @@ final class DateUtils
         return self::getCurrentTime() + $seconds;
     }
 
-    /***
+    /**
      * Gets a current server time in seconds.
      * @return int
      */

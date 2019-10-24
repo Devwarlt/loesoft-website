@@ -27,7 +27,7 @@ final class PacketManager implements IHandler
         $this->packets = $packets;
     }
 
-    /***
+    /**
      * Gets a singleton-like instance of **PacketManager** class.
      * @return PacketManager
      */
@@ -39,7 +39,7 @@ final class PacketManager implements IHandler
         return self::$singleton;
     }
 
-    /***
+    /**
      * Handle all incoming packets from client-side (jQuery asynchronous integration).
      * @param array $params
      * @return null|mixed

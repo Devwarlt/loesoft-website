@@ -28,12 +28,14 @@ CREATE TABLE `news` (
   ENGINE = InnoDB;
 
 CREATE TABLE `changelogs` (
-  `id`          INT        NOT NULL AUTO_INCREMENT,
-  `creation`    DATETIME   NOT NULL DEFAULT current_timestamp,
-  `edited`      DATETIME   NOT NULL DEFAULT current_timestamp,
-  `author_id`   INT        NOT NULL,
-  `reviewer_id` INT        NOT NULL DEFAULT -1,
-  `content`     MEDIUMTEXT NOT NULL,
+  `id`          INT         NOT NULL AUTO_INCREMENT,
+  `version`     VARCHAR(19) NOT NULL,
+  `type`        INT         NOT NULL,
+  `creation`    DATETIME    NOT NULL DEFAULT current_timestamp,
+  `edited`      DATETIME    NOT NULL DEFAULT current_timestamp,
+  `author_id`   INT         NOT NULL,
+  `reviewer_id` INT         NOT NULL DEFAULT -1,
+  `content`     MEDIUMTEXT  NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `changelogs_author_id_accounts_id` FOREIGN KEY (`author_id`) REFERENCES `accounts` (`id`)
 )

@@ -15,7 +15,7 @@ final class RegisterHandler implements IHandler
 {
     private static $singleton;
 
-    /***
+    /**
      * Gets a singleton-like instance of **RegisterHandler** class.
      * @return RegisterHandler
      */
