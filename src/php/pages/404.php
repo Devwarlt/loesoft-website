@@ -6,10 +6,11 @@
  * Time: 12:29
  */
 
-include "php/utilities/AutoLoader.php";
+include "../utilities/Utils.php";
+include "../handlers/IHandler.php";
+include "../handlers/LoginHandler.php";
 
-use php\utilities\AutoLoader as al;
 use php\utilities\Utils as utils;
+use php\handlers\LoginHandler as login;
 
-al::register();
-utils::getTemplateFromFile("Page not found!", "404", utils::htmlFormat, null, null, true);
+utils::getTemplateFromFile("Page not found!", "404", utils::htmlFormat, null, null, true, login::isLoggedIn());
