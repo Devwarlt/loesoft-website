@@ -1,4 +1,4 @@
-const version = "0.1";
+const version = "0.2";
 const secondMs = 1000;
 const delays = {
     loginMs: secondMs * 3,
