@@ -38,7 +38,7 @@ function sendCreateChangeLogPacket() {
             content: content
         },
         success: function () {
-            onSendPacketSuccess("/", delays.changeLogMs, packetsSuccess.publishChangeLog);
+            onSendPacketSuccess("/change-log", delays.changeLogMs, packetsSuccess.publishChangeLog);
         },
         error: function () {
             onSendPacketError(btn, target, packetsError.invalidChangeLogResponse);

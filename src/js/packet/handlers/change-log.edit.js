@@ -63,7 +63,7 @@ function sendEditChangeLogPacket() {
             content: content
         },
         success: function () {
-            onSendPacketSuccess("/", delays.changeLogMs, packetsSuccess.editChangeLog);
+            onSendPacketSuccess("/change-log", delays.changeLogMs, packetsSuccess.editChangeLog);
         },
         error: function () {
             onSendPacketError(btn, target, packetsError.invalidChangeLogResponse);

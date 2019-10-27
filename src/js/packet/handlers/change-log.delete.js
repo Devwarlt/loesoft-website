@@ -36,7 +36,7 @@ function sendDeleteChangeLogPacket() {
             id: id
         },
         success: function () {
-            onSendPacketSuccess("/", delays.changeLogMs, packetsSuccess.deleteChangeLog);
+            onSendPacketSuccess("/change-log", delays.changeLogMs, packetsSuccess.deleteChangeLog);
         },
         error: function () {
             onSendPacketError(btn, target, packetsError.invalidChangeLogResponse);
