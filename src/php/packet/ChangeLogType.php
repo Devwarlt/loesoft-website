@@ -14,8 +14,8 @@ final class ChangeLogType
     const server = 1;
     const website = 2;
     public static $types = array(
-        self::client,
-        self::server,
-        self::website
+        self::client => self::client,
+        self::server => self::server,
+        self::website => self::website
     );
 }

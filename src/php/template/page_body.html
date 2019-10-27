@@ -45,37 +45,6 @@
             </tbody>
         </table>
     </div>
-    <div id="logout" class="overlay overlay-content center-element">
-        <table>
-            <thead>
-            <tr>
-                <th><h2>Logout</h2></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="text-center">Are you sure you want to <strong>logout</strong>?</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td rowspan="2">
-                    <div class="relative-center">
-                        <div style="width: 50%; margin: 5%;">
-                            <button id="logout-btn" style="width: 100%; padding: 2%;" type="button"
-                                    onclick="sendLogoutPacket()">Yes
-                            </button>
-                        </div>
-                        <div style="width: 50%; margin: 5%;">
-                            <button style="width: 100%; padding: 2%;" onclick="hideOverlay('logout')">No
-                            </button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
-    </div>
     <div id="login" class="overlay overlay-content center-element">
         <table>
             <thead>
@@ -113,6 +82,37 @@
             </tfoot>
         </table>
     </div>
+    <div id="logout" class="overlay overlay-content center-element">
+        <table>
+            <thead>
+            <tr>
+                <th><h2>Logout</h2></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-center">Are you sure you want to <strong>logout</strong>?</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td rowspan="2">
+                    <div class="relative-center">
+                        <div style="width: 50%; margin: 5%;">
+                            <button id="logout-btn" style="width: 100%; padding: 2%;" type="button"
+                                    onclick="sendLogoutPacket()">Yes
+                            </button>
+                        </div>
+                        <div style="width: 50%; margin: 5%;">
+                            <button style="width: 100%; padding: 2%;" onclick="hideOverlay('logout')">No
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
 </div>
 <div id="loading" class="overlay-loading text-center">
     <img src="../../media/loading.gif" width="48" height="48"/>
@@ -129,6 +129,8 @@
 <script src="../../js/packet/handlers/logout.js"></script>
 <script src="../../js/packet/handlers/change-log.js"></script>
 <script src="../../js/packet/handlers/change-log.create.js"></script>
+<script src="../../js/packet/handlers/change-log.edit.js"></script>
+<script src="../../js/packet/handlers/change-log.delete.js"></script>
 <script>
     $(document).ready(function () {
         $.valHooks.textarea = {

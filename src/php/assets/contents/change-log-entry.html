@@ -15,10 +15,15 @@
         <restrict data-level="2">
             <div class="change-log-actions">
                 <div style="width: 96px; margin: 2px;">
-                    <button style="padding: 2%; width: 100%;" type="button">Edit</button>
+                    <button style="padding: 2%; width: 100%;" type="button"
+                            onclick="openEditChangeLogGUI({id: '{ID}', version: '{VERSION}', type: '{TYPE}', content: '{TEXT}'})">
+                        Edit
+                    </button>
                 </div>
                 <div style="width: 96px; margin: 2px">
-                    <button style="padding: 2%; width: 100%;" type="button">Delete</button>
+                    <button style="padding: 2%; width: 100%;" type="button"
+                            onclick="openDeleteChangeLogGUI({id: '{ID}'})">Delete
+                    </button>
                 </div>
             </div>
         </restrict>

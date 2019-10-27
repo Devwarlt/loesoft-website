@@ -60,3 +60,84 @@
         </tfoot>
     </table>
 </div>
+<div id="change-log-edit-gui" class="overlay overlay-content center-element">
+    <span id="change-log-id-edit" style="display: none"></span>
+    <table>
+        <thead>
+        <tr>
+            <th colspan="4"><h2>Edit</h2></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="text-right"><label><strong>Version</strong></label></td>
+            <td><input id="change-log-version-edit" type="text" title="version"/></td>
+            <td class="text-right"><label><strong>Type</strong></label></td>
+            <td>
+                <select id="change-log-type-edit" title="type">
+                    <option disabled selected>---</option>
+                    <option value="0">client</option>
+                    <option value="1">server</option>
+                    <option value="2">website</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right"><label><strong>Content</strong></label></td>
+            <td colspan="3"><textarea id="change-log-content-edit" title="content"
+                                      style="width: 400px; height: 300px;"></textarea></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4" rowspan="2">
+                <div class="relative-center">
+                    <div style="width: 50%; margin: 5%;">
+                        <button id="edit-btn" style="width: 100%; padding: 2%;" type="button"
+                                onclick="sendEditChangeLogPacket()">
+                            Edit
+                        </button>
+                    </div>
+                    <div style="width: 50%; margin: 5%;">
+                        <button style="width: 100%; padding: 2%;" type="button"
+                                onclick="hideOverlay('change-log-edit-gui')">Cancel
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<div id="change-log-delete-gui" class="overlay overlay-content center-element">
+    <span id="change-log-id-delete" style="display: none"></span>
+    <table>
+        <thead>
+        <tr>
+            <th><h2>Delete</h2></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="text-center">Are you sure you want to <strong>delete</strong> this change log entry?</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td rowspan="2">
+                <div class="relative-center">
+                    <div style="width: 50%; margin: 5%;">
+                        <button id="logout-btn" style="width: 100%; padding: 2%;" type="button"
+                                onclick="sendDeleteChangeLogPacket()">Yes
+                        </button>
+                    </div>
+                    <div style="width: 50%; margin: 5%;">
+                        <button style="width: 100%; padding: 2%;" onclick="hideOverlay('change-log-delete-gui')">No
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

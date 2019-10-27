@@ -50,7 +50,9 @@ if ($changeLogs->rowCount() > 0) {
             $changeLog->content
         );
         $result .= utils::replaceArray($entry, array(
-            "{ICON_TYPE}" => $cl->getType(),
+            "{ID}" => $cl->getId(),
+            "{ICON_TYPE}" => $cl->getIconType(),
+            "{TYPE}" => $cl->getType(),
             "{VERSION}" => $cl->getVersion(),
             "{TEXT}" => $cl->getContent(),
             "{AUTHOR}" => $dbu->getUsernameById($cl->getAuthorId()),

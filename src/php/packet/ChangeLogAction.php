@@ -14,8 +14,8 @@ final class ChangeLogAction
     const edit = 2;
     const delete = 3;
     public static $actions = array(
-        self::publish,
-        self::edit,
-        self::delete
+        self::publish => self::publish,
+        self::edit => self::edit,
+        self::delete => self::delete
     );
 }

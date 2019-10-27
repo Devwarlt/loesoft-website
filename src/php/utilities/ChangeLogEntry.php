@@ -8,7 +8,9 @@
 
 namespace php\utilities;
 
-use php\packet\ChangeLogType as clt;;
+use php\packet\ChangeLogType as clt;
+
+;
 
 final class ChangeLogEntry
 {
@@ -66,6 +68,15 @@ final class ChangeLogEntry
      */
     public function getType()
     {
+        return $this->type;
+    }
+
+    /**
+     * Gets icon type of change log entry.
+     * @return mixed
+     */
+    public function getIconType()
+    {
         switch ($this->type) {
             case clt::client:
                 return "client";
@@ -120,6 +131,6 @@ final class ChangeLogEntry
      */
     public function isChangeLogEdited()
     {
-        return $this->creation !== $this->edited;
+        return $this->creation != $this->edited;
     }
 }

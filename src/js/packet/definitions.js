@@ -7,6 +7,7 @@ const packetsId = {
 const packetsError = {
     usernameIsEmpty: "<strong>Username</strong> couldn't be empty!",
     passwordIsEmpty: "<strong>Password</strong> couldn't be empty!",
+    idIsEmpty: "<strong>ID</strong> couldn't be empty!",
     versionIsEmpty: "<strong>Version</strong> couldn't be empty!",
     typeIsEmpty: "<strong>Type</strong> couldn't be empty!",
     contentIsEmpty: "<strong>Content</strong> couldn't be empty!",
@@ -17,6 +18,8 @@ const packetsError = {
 };
 const packetsSuccess = {
     publishChangeLog: "You have successfully created a new change log entry, please wait while this page refresh...",
+    editChangeLog: "You have successfully edited this change log entry, please wait while this page refresh...",
+    deleteChangeLog: "You have successfully deleted this change log entry, please wait while this page refresh...",
     performLogIn: "You have successfully performed a login of your account, please wait while you are being redirected to main page...",
     performLogOut: "You have successfully performed a logout of your account, please wait while you are being redirected to main page..."
 };

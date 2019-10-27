@@ -41,20 +41,20 @@ final class Database
 
     /**
      * Execute an update query on database.
-     * @param $sql : SQL query.
+     * @param DatabaseQuery $query
      * @return bool
      */
-    public function update($sql)
+    public function update(DatabaseQuery $query)
     {
-        return $this->insert($sql);
+        return $this->dml($query->getSql());
     }
 
     /**
-     * Execute an insert query on database.
-     * @param $sql : SQL query.
+     * **Data Manipulation Language**: INSERT, DELETE and UPDATE commands.
+     * @param $sql
      * @return bool
      */
-    public function insert($sql)
+    private function dml($sql)
     {
         $query = self::$connection->prepare($sql);
 
@@ -63,21 +63,41 @@ final class Database
 
     /**
      * Execute a delete query on database.
-     * @param $sql : SQL query.
+     * @param DatabaseQuery $query
      * @return bool
      */
-    public function delete($sql)
+    public function delete(DatabaseQuery $query)
     {
-        return $this->insert($sql);
+        return $this->dml($query->getSql());
+    }
+
+    /**
+     * Execute an insert query on database.
+     * @param DatabaseQuery $query
+     * @return bool
+     */
+    public function insert(DatabaseQuery $query)
+    {
+        return $this->dml($query->getSql());
     }
 
     /**
      * Execute a select query on database and returns a **PDOStatement** to being used at fetch response.
      * @internal This method can result in invalidation in case of invalid query along execute (PDO).
-     * @param $sql : SQL Query.
+     * @param DatabaseQuery $query
      * @return \PDOStatement
      */
-    public function select($sql)
+    public function select(DatabaseQuery $query)
+    {
+        return $this->dql($query->getSql());
+    }
+
+    /**
+     * **Data Query Language**: SELECT command.
+     * @param $sql
+     * @return \PDOStatement
+     */
+    private function dql($sql)
     {
         $query = self::$connection->query($sql);
 

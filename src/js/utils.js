@@ -89,3 +89,19 @@ function handleRestrictionByAccessLevel() {
         else restrictions[i].style.display = "contents";
     }
 }
+
+function overrideElementValById(targetId, value) {
+    $("#" + targetId).val(value);
+}
+
+function toJSONFormat(data) {
+    var result = "";
+
+    if (data.length === 0) return "{}";
+
+    Object.keys(data).forEach(function (key) {
+        result += "['" + key + "']: " + data[key] + "\n";
+    });
+
+    return result;
+}

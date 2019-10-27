@@ -7,6 +7,7 @@
  */
 
 include "../utilities/Utils.php";
+include "../utilities/DatabaseQuery.php";
 include "../utilities/Database.php";
 include "../utilities/DateUtils.php";
 include "../utilities/DatabaseUtils.php";

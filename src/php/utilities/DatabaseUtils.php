@@ -32,15 +32,11 @@ final class DatabaseUtils
     public function isAccountExist($username, $password, $hasEncryption = true)
     {
         $db = db::getSingleton();
-        $action = array(
-            "sql" => "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
-            "params" => array(
-                ":username" => $username,
-                ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password
-            )
-        );
-        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
-        $result = $db->select($action["sql"]);
+        $result = $db->select(
+            new DatabaseQuery(
+                "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
+                [":username" => $username, ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password]
+            ));
 
         return $result !== null && $result->rowCount() == 1;
     }
@@ -53,14 +49,10 @@ final class DatabaseUtils
     public function getUsernameById($id)
     {
         $db = db::getSingleton();
-        $action = array(
-            "sql" => "select `username` from `accounts` where `id` = ':id'",
-            "params" => array(
-                ":id" => $id
-            )
-        );
-        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
-        $result = $db->select($action["sql"]);
+        $result = $db->select(new DatabaseQuery(
+            "select `username` from `accounts` where `id` = ':id'",
+            [":id" => $id]
+        ));
 
         if ($result->rowCount() == 0) return "Unknown";
 
@@ -79,15 +71,10 @@ final class DatabaseUtils
     public function getIdFromAccount($username, $password, $hasEncryption = true)
     {
         $db = db::getSingleton();
-        $action = array(
-            "sql" => "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
-            "params" => array(
-                ":username" => $username,
-                ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password
-            )
-        );
-        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
-        $result = $db->select($action["sql"]);
+        $result = $db->select(new DatabaseQuery(
+            "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
+            [":username" => $username, ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password]
+        ));
 
         if ($result->rowCount() == 0) return -1;
 
@@ -106,15 +93,10 @@ final class DatabaseUtils
     public function getAccessLevelFromAccount($username, $password, $hasEncryption = true)
     {
         $db = db::getSingleton();
-        $action = array(
-            "sql" => "select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
-            "params" => array(
-                ":username" => $username,
-                ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password
-            )
-        );
-        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
-        $result = $db->select($action["sql"]);
+        $result = $db->select(new DatabaseQuery(
+            "select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
+            [":username" => $username, ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password]
+        ));
 
         if ($result->rowCount() == 0) return al::regular;
 
@@ -130,7 +112,7 @@ final class DatabaseUtils
     public function countNews()
     {
         $db = db::getSingleton();
-        $result = $db->select("select count(`id`) as `count` from `news`");
+        $result = $db->select(new DatabaseQuery("select count(`id`) as `count` from `news`"));
 
         if ($result === null) return 0;
 
@@ -148,17 +130,11 @@ final class DatabaseUtils
     public function getNewsByLimit($page, $limit)
     {
         $db = db::getSingleton();
-        $action = array(
-            "sql" => "select `id`, `creation`, `author_id`, `title`, `tags` from `news` limit :limit offset :offset",
-            "params" => array(
-                ":limit" => $limit,
-                ":offset" => ($page - 1) * $limit
-            )
-        );
-        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
-        $result = $db->select($action["sql"]);
 
-        return $result;
+        return $db->select(new DatabaseQuery(
+            "select `id`, `creation`, `author_id`, `title`, `tags` from `news` limit :limit offset :offset",
+            [":limit" => $limit, ":offset" => ($page - 1) * $limit]
+        ));
     }
 
     /**
@@ -169,16 +145,11 @@ final class DatabaseUtils
     public function getNewsContentById($id)
     {
         $db = db::getSingleton();
-        $action = array(
-            "sql" => "select * from `news` where `id` = :id",
-            "params" => array(
-                ":id" => $id
-            )
-        );
-        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
-        $result = $db->select($action["sql"]);
 
-        return $result;
+        return $db->select(new DatabaseQuery(
+            "select * from `news` where `id` = :id",
+            [":id" => $id]
+        ));
     }
 
     /**
@@ -188,7 +159,7 @@ final class DatabaseUtils
     public function countChangeLogs()
     {
         $db = db::getSingleton();
-        $result = $db->select("select count(`id`) as `count` from `changelogs`");
+        $result = $db->select(new DatabaseQuery("select count(`id`) as `count` from `changelogs`"));
 
         if ($result === null) return 0;
 
@@ -206,17 +177,11 @@ final class DatabaseUtils
     public function getChangeLogsByLimit($page, $limit)
     {
         $db = db::getSingleton();
-        $action = array(
-            "sql" => "select * from `changelogs` order by `id` desc limit :limit offset :offset",
-            "params" => array(
-                ":limit" => $limit,
-                ":offset" => ($page - 1) * $limit
-            )
-        );
-        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
-        $result = $db->select($action["sql"]);
 
-        return $result;
+        return $db->select(new DatabaseQuery(
+            "select * from `changelogs` order by `id` desc limit :limit offset :offset",
+            [":limit" => $limit, ":offset" => ($page - 1) * $limit]
+        ));
     }
 
     /**
@@ -230,17 +195,43 @@ final class DatabaseUtils
     public function publishChangeLog($version, $type, $authorId, $content)
     {
         $db = db::getSingleton();
-        $action = array(
-            "sql" => "insert into `changelogs` (`version`, `type`, `author_id`, `content`) values (':version', :type, :author_id, ':content')",
-            "params" => array(
-                ":version" => $version,
-                ":type" => $type,
-                ":author_id" => $authorId,
-                ":content" => $content
-            )
-        );
-        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
 
-        return $db->insert($action["sql"]);
+        return $db->insert(new DatabaseQuery(
+            "insert into `changelogs` (`version`, `type`, `author_id`, `content`) values (':version', :type, :author_id, ':content')",
+            [":version" => $version, ":type" => $type, ":author_id" => $authorId, ":content" => $content]
+        ));
+    }
+
+    /**
+     * Update a change log entry.
+     * @param $version
+     * @param $type
+     * @param $reviewerId
+     * @param $content
+     * @return bool
+     */
+    public function editChangeLog($id, $version, $type, $reviewerId, $content)
+    {
+        $db = db::getSingleton();
+
+        return $db->update(new DatabaseQuery(
+            "update `changelogs` set `version` = ':version', `type` = :type, `reviewer_id` = :reviewer_id, `content` = ':content', `edited` = CURRENT_TIMESTAMP where `id` = :id",
+            [":id" => $id, ":version" => $version, ":type" => $type, ":reviewer_id" => $reviewerId, ":content" => $content]
+        ));
+    }
+
+    /**
+     * Delete a change log entry.
+     * @param $id
+     * @return bool
+     */
+    public function deleteChangeLog($id)
+    {
+        $db = db::getSingleton();
+
+        return $db->delete(new DatabaseQuery(
+            "delete from `changelogs` where `id` = :id",
+            [":id" => $id]
+        ));
     }
 }

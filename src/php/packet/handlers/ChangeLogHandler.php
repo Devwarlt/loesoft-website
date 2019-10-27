@@ -87,13 +87,13 @@ final class ChangeLogHandler extends Debug implements IHandler
 
             switch ($action) {
                 case cla::publish:
-                    $this->handlePublish($credentials, $params);
+                    $result = $this->handlePublish($credentials, $params);
                     break;
                 case cla::edit:
-                    $this->handleEdit($credentials, $params); // TODO: implements this method.
+                    $result = $this->handleEdit($credentials, $params);
                     break;
                 case cla::delete:
-                    $this->handleDelete($credentials, $params); // TODO: implements this method.
+                    $result = $this->handleDelete($credentials, $params);
                     break;
             }
 
@@ -103,8 +103,15 @@ final class ChangeLogHandler extends Debug implements IHandler
         return pr::onError();
     }
 
+    /**
+     * Handle a publish change log action.
+     * @param array $credentials
+     * @param array $params
+     * @return string
+     */
     private function handlePublish(array $credentials, array $params)
     {
+        $this->debug("Resolving 'Publish' action request...");
         $accessLevel = $credentials["accessLevel"];
 
         if ($accessLevel < self::publishAccessLevel) {
@@ -139,13 +146,81 @@ final class ChangeLogHandler extends Debug implements IHandler
         return pr::onError();
     }
 
+    /**
+     * Handle a edit change log action.
+     * @param array $credentials
+     * @param array $params
+     * @return string
+     */
     private function handleEdit(array $credentials, array $params)
     {
-        // TODO: implements this method.
+        $this->debug("Resolving 'Edit' action request...");
+        $accessLevel = $credentials["accessLevel"];
+
+        if ($accessLevel < self::editAccessLevel) {
+            $this->debug("Access level <strong>" . $accessLevel . "</strong> isn't enough to perform this action, required access level <strong>" . self::editAccessLevel . "</strong>");
+            return pr::onInvalid();
+        }
+
+        $id = utils::tryGetValue($params, "id");
+        $version = utils::tryGetValue($params, "version");
+        $type = utils::tryGetValue($params, "type");
+        $content = utils::tryGetValue($params, "content");
+
+        if (utils::isNullOrEmpty($id) || utils::isNullOrEmpty($version) || utils::isNullOrEmpty($type) || utils::isNullOrEmpty($content)) {
+            $this->debug("Required data to edit a new change log entry are missing!");
+            return pr::onInvalid();
+        }
+
+        $id = (int)$id;
+        $type = (int)$type;
+
+        if (!array_key_exists($type, clt::$types)) {
+            $this->debug("Type <strong>" . $type . "</strong> isn't registered!");
+            return pr::onInvalid();
+        }
+
+        $dbu = dutils::getSingleton();
+        $reviwerId = $dbu->getIdFromAccount($credentials["username"], $credentials["password"], false);
+
+        if ($dbu->editChangeLog($id, $version, $type, $reviwerId, $content)) {
+            $this->debug("Successfully edited this change log entry!");
+            return pr::onSuccess();
+        } else $this->debug("It wasn't possible to edit this change log entry on database!");
+
+        return pr::onError();
     }
 
+    /**
+     * Handle a delete change log action.
+     * @param array $credentials
+     * @param array $params
+     */
     private function handleDelete(array $credentials, array $params)
     {
-        // TODO: implements this method.
+        $this->debug("Resolving 'Delete' action request...");
+        $accessLevel = $credentials["accessLevel"];
+
+        if ($accessLevel < self::deleteAccessLevel) {
+            $this->debug("Access level <strong>" . $accessLevel . "</strong> isn't enough to perform this action, required access level <strong>" . self::deleteAccessLevel . "</strong>");
+            return pr::onInvalid();
+        }
+
+        $id = utils::tryGetValue($params, "id");
+
+        if (utils::isNullOrEmpty($id)) {
+            $this->debug("Required data to edit a new change log entry are missing!");
+            return pr::onInvalid();
+        }
+
+        $id = (int)$id;
+        $dbu = dutils::getSingleton();
+
+        if ($dbu->deleteChangeLog($id)) {
+            $this->debug("Successfully deleted this change log entry!");
+            return pr::onSuccess();
+        } else $this->debug("It wasn't possible to delete this change log entry on database!");
+
+        return pr::onError();
     }
 }
