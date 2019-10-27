@@ -22,6 +22,16 @@ final class DatabaseUtils
         return self::$singleton;
     }
 
+    public function registerAccount($username, $password)
+    {
+        $db = db::getSingleton();
+
+        return $db->insert(new DatabaseQuery(
+            "insert into `accounts` (`username`, `password`) values (':username', ':password')",
+            [":username" => $username, ":password" => utils::getSha512Hash($password)]
+        ));
+    }
+
     /**
      * Check if account exists.
      * @param $username
@@ -38,7 +48,24 @@ final class DatabaseUtils
                 [":username" => $username, ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password]
             ));
 
-        return $result !== null && $result->rowCount() == 1;
+        return $result->rowCount() > 0;
+    }
+
+    /**
+     * Check if username exists.
+     * @param $username
+     * @return bool
+     */
+    public function isUsernameExist($username)
+    {
+        $db = db::getSingleton();
+        $result = $db->select(
+            new DatabaseQuery(
+                "select `username` from `accounts` where `username` = ':username'",
+                [":username" => $username]
+            ));
+
+        return $result->rowCount() > 0;
     }
 
     /**
@@ -49,10 +76,11 @@ final class DatabaseUtils
     public function getUsernameById($id)
     {
         $db = db::getSingleton();
-        $result = $db->select(new DatabaseQuery(
-            "select `username` from `accounts` where `id` = ':id'",
-            [":id" => $id]
-        ));
+        $result = $db->select(
+            new DatabaseQuery(
+                "select `username` from `accounts` where `id` = ':id'",
+                [":id" => $id]
+            ));
 
         if ($result->rowCount() == 0) return "Unknown";
 
@@ -71,10 +99,11 @@ final class DatabaseUtils
     public function getIdFromAccount($username, $password, $hasEncryption = true)
     {
         $db = db::getSingleton();
-        $result = $db->select(new DatabaseQuery(
-            "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
-            [":username" => $username, ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password]
-        ));
+        $result = $db->select(
+            new DatabaseQuery(
+                "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
+                [":username" => $username, ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password]
+            ));
 
         if ($result->rowCount() == 0) return -1;
 
@@ -93,10 +122,11 @@ final class DatabaseUtils
     public function getAccessLevelFromAccount($username, $password, $hasEncryption = true)
     {
         $db = db::getSingleton();
-        $result = $db->select(new DatabaseQuery(
-            "select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
-            [":username" => $username, ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password]
-        ));
+        $result = $db->select(
+            new DatabaseQuery(
+                "select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
+                [":username" => $username, ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password]
+            ));
 
         if ($result->rowCount() == 0) return al::regular;
 
@@ -131,10 +161,11 @@ final class DatabaseUtils
     {
         $db = db::getSingleton();
 
-        return $db->select(new DatabaseQuery(
-            "select `id`, `creation`, `author_id`, `title`, `tags` from `news` limit :limit offset :offset",
-            [":limit" => $limit, ":offset" => ($page - 1) * $limit]
-        ));
+        return $db->select(
+            new DatabaseQuery(
+                "select `id`, `creation`, `author_id`, `title`, `tags` from `news` limit :limit offset :offset",
+                [":limit" => $limit, ":offset" => ($page - 1) * $limit]
+            ));
     }
 
     /**
@@ -146,10 +177,11 @@ final class DatabaseUtils
     {
         $db = db::getSingleton();
 
-        return $db->select(new DatabaseQuery(
-            "select * from `news` where `id` = :id",
-            [":id" => $id]
-        ));
+        return $db->select(
+            new DatabaseQuery(
+                "select * from `news` where `id` = :id",
+                [":id" => $id]
+            ));
     }
 
     /**
@@ -178,10 +210,11 @@ final class DatabaseUtils
     {
         $db = db::getSingleton();
 
-        return $db->select(new DatabaseQuery(
-            "select * from `changelogs` order by `id` desc limit :limit offset :offset",
-            [":limit" => $limit, ":offset" => ($page - 1) * $limit]
-        ));
+        return $db->select(
+            new DatabaseQuery(
+                "select * from `changelogs` order by `id` desc limit :limit offset :offset",
+                [":limit" => $limit, ":offset" => ($page - 1) * $limit]
+            ));
     }
 
     /**
@@ -196,10 +229,11 @@ final class DatabaseUtils
     {
         $db = db::getSingleton();
 
-        return $db->insert(new DatabaseQuery(
-            "insert into `changelogs` (`version`, `type`, `author_id`, `content`) values (':version', :type, :author_id, ':content')",
-            [":version" => $version, ":type" => $type, ":author_id" => $authorId, ":content" => $content]
-        ));
+        return $db->insert(
+            new DatabaseQuery(
+                "insert into `changelogs` (`version`, `type`, `author_id`, `content`) values (':version', :type, :author_id, ':content')",
+                [":version" => $version, ":type" => $type, ":author_id" => $authorId, ":content" => $content]
+            ));
     }
 
     /**
@@ -214,10 +248,11 @@ final class DatabaseUtils
     {
         $db = db::getSingleton();
 
-        return $db->update(new DatabaseQuery(
-            "update `changelogs` set `version` = ':version', `type` = :type, `reviewer_id` = :reviewer_id, `content` = ':content', `edited` = CURRENT_TIMESTAMP where `id` = :id",
-            [":id" => $id, ":version" => $version, ":type" => $type, ":reviewer_id" => $reviewerId, ":content" => $content]
-        ));
+        return $db->update(
+            new DatabaseQuery(
+                "update `changelogs` set `version` = ':version', `type` = :type, `reviewer_id` = :reviewer_id, `content` = ':content', `edited` = CURRENT_TIMESTAMP where `id` = :id",
+                [":id" => $id, ":version" => $version, ":type" => $type, ":reviewer_id" => $reviewerId, ":content" => $content]
+            ));
     }
 
     /**
@@ -229,9 +264,10 @@ final class DatabaseUtils
     {
         $db = db::getSingleton();
 
-        return $db->delete(new DatabaseQuery(
-            "delete from `changelogs` where `id` = :id",
-            [":id" => $id]
-        ));
+        return $db->delete(
+            new DatabaseQuery(
+                "delete from `changelogs` where `id` = :id",
+                [":id" => $id]
+            ));
     }
 }

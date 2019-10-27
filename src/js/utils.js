@@ -3,6 +3,7 @@ const secondMs = 1000;
 const delays = {
     loginMs: secondMs * 3,
     logoutMs: secondMs * 2,
+    registerMs: secondMs * 5,
     changeLogMs: secondMs * 2,
     packetMs: secondMs / 4
 };
@@ -81,7 +82,7 @@ function handleRestrictionByAccessLevel() {
     var restrictions = document.getElementsByTagName("restrict");
     var accessLevel = getLoginCredentials().accessLevel;
 
-    if (isNullOrEmpty(accessLevel)) accessLevel = accessLevels.regular;
+    if (isNullOrEmpty(accessLevel)) accessLevel = accessLevels.invalid;
 
     for (var i = 0; i < restrictions.length; i++) {
         var requiredLevel = parseInt(restrictions[i].dataset.level);

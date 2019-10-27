@@ -71,3 +71,25 @@ code.relative-center {
     margin: 0;
     color: var(--ws-shade-color-4);
 }
+
+.img-outline {
+    -webkit-filter: drop-shadow(0px 1px 0 black) drop-shadow(1px 0px 0 black) drop-shadow(0px -1px 0 black) drop-shadow(-1px 0px 0 black);
+    filter: drop-shadow(0px 1px 0 black) drop-shadow(1px 0px 0 black) drop-shadow(0px -1px 0 black) drop-shadow(-1px 0px 0 black);
+}
+
+.flashing {
+    font-weight: bold;
+    animation-duration: 750ms;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.5;
+    }
+}

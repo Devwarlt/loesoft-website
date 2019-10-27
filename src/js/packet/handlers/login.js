@@ -24,7 +24,7 @@ function sendLoginPacket() {
             btn.attr("disabled", true);
         },
         handler: function (data) {
-            hideOverlay("login");
+            hideOverlay(target);
             showOverlay("result-content");
 
             var booleanObject = stringToBooleanObject(data);

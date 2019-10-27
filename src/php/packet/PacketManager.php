@@ -26,9 +26,9 @@ final class PacketManager extends Debug implements IHandler
         $packets[pid::register] = register::getSingleton();
         $packets[pid::changeLog] = changelog::getSingleton();
         $this->packets = $packets;
-        $this->configureDebug(true);
+        $this->configureDebug(false);
 
-        Debug::$allEnabled = true;
+        Debug::$allEnabled = false;
     }
 
     /**

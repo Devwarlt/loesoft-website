@@ -26,7 +26,7 @@ final class ChangeLogHandler extends Debug implements IHandler
 
     public function __construct()
     {
-        $this->configureDebug(true);
+        $this->configureDebug(false);
     }
 
     /**
@@ -50,7 +50,10 @@ final class ChangeLogHandler extends Debug implements IHandler
     {
         $this->title("Change Log Handler");
 
-        if (!login::isLoggedIn()) return pr::onInvalid();
+        if (!login::isLoggedIn()) {
+            $this->debug("User isn't logged in!");
+            return pr::onInvalid();
+        }
 
         $action = utils::tryGetValue($params, "action");
 

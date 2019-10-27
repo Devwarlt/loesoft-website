@@ -7,11 +7,14 @@ const packetsId = {
 const packetsError = {
     usernameIsEmpty: "<strong>Username</strong> couldn't be empty!",
     passwordIsEmpty: "<strong>Password</strong> couldn't be empty!",
+    passwordRepeatIsEmpty: "<strong>Password</strong> (repeat) couldn't be empty!",
+    passwordNotMatch: "<strong>Passwords</strong> doesn't match!",
     idIsEmpty: "<strong>ID</strong> couldn't be empty!",
     versionIsEmpty: "<strong>Version</strong> couldn't be empty!",
     typeIsEmpty: "<strong>Type</strong> couldn't be empty!",
     contentIsEmpty: "<strong>Content</strong> couldn't be empty!",
     accountNotFound: "<strong>Account</strong> not found!",
+    duplicatedUsername: "<strong>Username</strong> already in use!",
     invalidPacketResponse: "An error occurred while processing your request! Try again later...",
     invalidChangeLogResponse: "Couldn't be possible to process your request!",
     userIsNotLoggedIn: "You aren't logged in to perform this action!"
@@ -21,7 +24,8 @@ const packetsSuccess = {
     editChangeLog: "You have successfully edited this change log entry, please wait while this page refresh...",
     deleteChangeLog: "You have successfully deleted this change log entry, please wait while this page refresh...",
     performLogIn: "You have successfully performed a login of your account, please wait while you are being redirected to main page...",
-    performLogOut: "You have successfully performed a logout of your account, please wait while you are being redirected to main page..."
+    performLogOut: "You have successfully performed a logout of your account, please wait while you are being redirected to main page...",
+    performRegistration: "You have successfully performed a registration of a new account, please wait while you are being redirected to main page..."
 };
 
 /* packets defs */
@@ -29,6 +33,7 @@ const loginUsernameCookie = "login-username-cookie";
 const loginPasswordCookie = "login-password-cookie";
 const loginAccessLevelCookie = "login-access-level-cookie";
 const accessLevels = {
+    invalid: -1,
     regular: 0,
     moderator: 1,
     admin: 2,
