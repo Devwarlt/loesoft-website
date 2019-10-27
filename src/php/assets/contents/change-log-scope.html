@@ -1,9 +1,17 @@
-<div id="change-log-admin" class="change-log-header">
-    <div style="width: 64px; margin: 5%;">
-        <button style="padding: 2%; width: 100%;" type="button" onclick="showOverlay('change-log-create-gui')">Create
-        </button>
+<restrict data-level="2">
+    <div class="change-log-header">
+        <div style="width: 96px; margin: 10%;">
+            <button style="padding: 2%; width: 100%;" type="button" onclick="showOverlay('change-log-create-gui')">
+                Create
+            </button>
+        </div>
     </div>
+</restrict>
+<div class="text-center">
+    Check all change logs published at this moment based on type, version and content.
 </div>
+<br/>
+<hr/>
 <div id="change-log-create-gui" class="overlay overlay-content center-element">
     <table>
         <thead>
@@ -14,10 +22,11 @@
         <tbody>
         <tr>
             <td class="text-right"><label><strong>Version</strong></label></td>
-            <td><input id="change-log-version" type="text" title="text"/></td>
+            <td><input id="change-log-version" type="text" title="version"/></td>
             <td class="text-right"><label><strong>Type</strong></label></td>
             <td>
                 <select id="change-log-type" title="type">
+                    <option disabled selected>---</option>
                     <option value="0">client</option>
                     <option value="1">server</option>
                     <option value="2">website</option>

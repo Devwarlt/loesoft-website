@@ -1,0 +1,95 @@
+.change-log-table {
+    padding: 2px;
+}
+
+.change-log-entry {
+    margin: 2px;
+    padding: 4px;
+    border: 1px solid var(--ws-shade-color-3);
+    border-radius: var(--ws-button-border-radius);
+    background-color: var(--ws-background-color-1);
+}
+
+.change-log-icon, .change-log-version {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    border: 1px solid var(--ws-shade-color-3);
+    border-radius: var(--ws-button-border-radius);
+}
+
+.change-log-icon img, .change-log-authors code {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 3px;
+}
+
+.change-log-authors {
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid var(--ws-shade-color-3);
+    background-color: var(--ws-background-color-2);
+    border-radius: var(--ws-button-border-radius);
+    padding: 6px;
+}
+
+.change-log-authors span {
+    color: var(--ws-shade-color-5);
+    font-weight: bold;
+}
+
+.change-log-author {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.change-log-icon {
+    width: 64px;
+    height: 48px;
+    position: absolute;
+    color: var(--ws-shade-color-5);
+    padding-top: 2px;
+    padding-bottom: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: var(--ws-shade-color-1);
+}
+
+.change-log-version {
+    word-wrap: break-word;
+    margin-left: 64px;
+    padding: 8px;
+    width: 64px;
+    line-height: normal;
+    vertical-align: middle;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: var(--ws-background-color-2);
+    color: var(--ws-shade-color-4);
+    text-align: center;
+}
+
+.change-log-text {
+    display: inline-table;
+    color: var(--ws-shade-color-5);
+}
+
+.change-log-text code {
+    display: inherit;
+    word-break: break-all;
+}
+
+.change-log-header {
+    display: inline-block; /* display: none */
+}
+
+.change-log-actions {
+    display: inline-flex;
+    float: right;
+    border: 1px solid var(--ws-shade-color-3);
+    border-radius: var(--ws-button-border-radius);
+    background-color: var(--ws-background-color-2);
+    padding: 16px;
+}

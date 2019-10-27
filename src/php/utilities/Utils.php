@@ -21,7 +21,6 @@ final class Utils
         "title" => "{TITLE}",
         "body" => "{BODY}",
         "footer" => "{FOOTER}",
-        "css" => "{CSS}",
         "404" => "{404}",
         "login" => "{LOGIN}"
     );
@@ -48,11 +47,10 @@ final class Utils
      * @param $title : title of page.
      * @param $contentPath : exist file from local resources.
      * @param $extension : file extension.
-     * @param null $css : (optional) css that will be embedded into page template.
      * @param $is404 : (optional) replace **{PAGE}** string key to current targeted page.
      * @param $loggedIn : (optional) replace **{LOGIN}** string key to current log-in definition.
      */
-    public static function getTemplateFromFile($title, $contentPath, $extension, $css = null, $is404 = false, $loggedIn = false)
+    public static function getTemplateFromFile($title, $contentPath, $extension, $is404 = false, $loggedIn = false)
     {
         $relativePath = "../assets/contents/$contentPath";
         $assetBundle = array(
@@ -62,7 +60,6 @@ final class Utils
                 self::getContents("$relativePath.html") :
                 self::getPhpContents("$relativePath.php"),
             "footer" => self::getContents("../template/page_footer.html"),
-            "css" => $css !== null ? self::getContents("../assets/stylesheets/$css.css", "style") : "",
             "404" => $is404 ? self::getRelativeLocationHref() : "unknown",
             "login" => $loggedIn ? "<a id=\"logout-option\" onclick=\"showOverlay('logout')\">Logout</a>" : "<a id=\"login-option\" onclick=\"showOverlay('login')\">Login</a>"
         );
@@ -79,10 +76,9 @@ final class Utils
     /**
      * Returns a string based on local path from folder **src/php**
      * @param $path : exist file from local resources.
-     * @param null $tag : (optional) auto-format contents adding tags.
      * @return string
      */
-    public static function getContents($path, $tag = null)
+    public static function getContents($path)
     {
         $file = dirname(__FILE__) . "/$path";
 
@@ -90,7 +86,7 @@ final class Utils
 
         $result = file_get_contents($file);
 
-        return $tag !== null ? "<" . $tag . ">" . $result . "</" . $tag . ">" : $result;
+        return $result;
     }
 
     /**
@@ -109,15 +105,15 @@ final class Utils
 
     /**
      * Returns a formatted string that contains relative location href requested by client.
+     * @param $hasUri
      * @return string
      */
-    private static function getRelativeLocationHref()
+    public static function getRelativeLocationHref($hasUri = true)
     {
         $location = @$_SERVER["HTTPS"] == "on" ? "https://" : "http://";
+        $location .= $_SERVER["SERVER_NAME"] . ($_SERVER["SERVER_PORT"] != "80" ? ":" . $_SERVER["SERVER_PORT"] : "");
 
-        if ($_SERVER["SERVER_PORT"] != "80")
-            $location .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
-        else $location .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+        if ($hasUri) $location .= $_SERVER["REQUEST_URI"];
 
         return $location;
     }
@@ -142,16 +138,6 @@ final class Utils
     public static function getSha512Hash($value)
     {
         return hash('sha512', $value);
-    }
-
-    /**
-     * Verify if string is null or empty.
-     * @param $value
-     * @return bool
-     */
-    public static function isNullOrEmpty($value)
-    {
-        return $value === null || empty($value);
     }
 
     /**
@@ -185,5 +171,41 @@ final class Utils
             $value = self::replace($innerKey, $innerValue, $value);
 
         return $value;
+    }
+
+    /**
+     * Converts an array into JSON format type (string layout).
+     * @param array $array
+     * @return null|string
+     */
+    public static function arrayToJSON(array $array)
+    {
+        $result = null;
+
+        if (count($array) == 0) return "{}";
+
+        $result .= "{<br />";
+
+        if (array_count_values($array) != 0)
+            foreach ($array as $key => $value)
+                $result .= "&nbsp;&nbsp;&nbsp;&nbsp;\"" . $key . "\": \"" . (!self::isNullOrEmpty($value) ? $value : "empty") . "\",<br />";
+        else
+            foreach ($array as $key)
+                $result .= "&nbsp;&nbsp;&nbsp;&nbsp;\"" . $key . "\"<br />";
+
+        $result = rtrim($result, ",<br />");
+        $result .= "<br />}";
+
+        return $result;
+    }
+
+    /**
+     * Verify if string is null or empty.
+     * @param $value
+     * @return bool
+     */
+    public static function isNullOrEmpty($value)
+    {
+        return $value === null || $value === "";
     }
 }

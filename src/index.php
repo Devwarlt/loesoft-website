@@ -3,7 +3,7 @@ include "php/utilities/AutoLoader.php";
 
 use php\utilities\AutoLoader as al;
 use php\utilities\Utils as utils;
-use php\handlers\LoginHandler as login;
+use php\packet\handlers\LoginHandler as login;
 
 al::register();
-utils::getTemplateFromFile("Home", "home", utils::htmlFormat, null, false, login::isLoggedIn());
+utils::getTemplateFromFile("Home", "home", utils::htmlFormat, false, login::isLoggedIn());

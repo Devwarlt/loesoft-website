@@ -1,20 +1,30 @@
 <tr>
     <td class="change-log-entry">
         <div class="change-log-icon">
-            <img src="../../../media/{ICON_TYPE}.png" width="16px" height="16px"/> {ICON_TYPE}
+            <img src="../../../media/{ICON_TYPE}.png" width="16px"
+                 height="16px"/>&nbsp;&nbsp;<code><strong>{ICON_TYPE}</strong></code>
         </div>
         <div class="change-log-version">
-            version: <strong>{VERSION}</strong>
+            <code>version:<span>{VERSION}</span></code>
         </div>
-        <div class="change-log-text">
-            {TEXT}
+        <div class="change-log-authors text-center">
+            <code class="change-log-author">posted by <span>{AUTHOR}</span> - {CREATION_DATE} UTC</code>
+            <code class="change-log-author" style="display: {DISPLAY}">edited by <span>{EDITOR}</span> - {EDITION_DATE}
+                UTC</code>
         </div>
+        <restrict data-level="2">
+            <div class="change-log-actions">
+                <div style="width: 96px; margin: 2px;">
+                    <button style="padding: 2%; width: 100%;" type="button">Edit</button>
+                </div>
+                <div style="width: 96px; margin: 2px">
+                    <button style="padding: 2%; width: 100%;" type="button">Delete</button>
+                </div>
+            </div>
+        </restrict>
         <br/>
-        <div class="change-log-author">
-            {AUTHOR} (published at {CREATION_DATE}).
-        </div>
-        <div class="change-log-edited" style="display: {DISPLAY};">
-            {EDITOR} (last edited at {EDITION_DATE}).
+        <div class="change-log-text">
+            <code>"{TEXT}"</code>
         </div>
     </td>
 </tr>

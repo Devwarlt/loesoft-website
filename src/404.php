@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: devwarlt
- * Date: 23/10/2019
- * Time: 19:24
+ * Date: 15/10/2019
+ * Time: 12:29
  */
 
 include "php/utilities/AutoLoader.php";
@@ -13,4 +13,4 @@ use php\utilities\Utils as utils;
 use php\packet\handlers\LoginHandler as login;
 
 al::register();
-utils::getTemplateFromFile("Change Log", "change-log", utils::phpFormat, false, login::isLoggedIn());
+utils::getTemplateFromFile("Page not found!", "404", utils::htmlFormat, true, login::isLoggedIn());

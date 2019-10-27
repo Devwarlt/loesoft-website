@@ -6,21 +6,23 @@
  * Time: 12:34
  */
 
-namespace php\handlers;
+namespace php\packet\handlers;
 
+use php\packet\results\PacketResult as pr;
 use php\utilities\DateUtils as dutils;
 use php\utilities\DatabaseUtils as dbutils;
 use php\utilities\Utils as utils;
 
 define("LOGIN_USERNAME", "login-username-cookie");
 define("LOGIN_PASSWORD", "login-password-cookie");
+define("LOGIN_ACCESS_LEVEL", "login-access-level-cookie");
 
 final class LoginHandler implements IHandler
 {
     private static $singleton;
 
     /**
-     * Gets a singleton-like instance of **LoginHandler** class.
+     * Gets a singleton-like instance of class that implements **IHandler**.
      * @return LoginHandler
      */
     public static function getSingleton()
@@ -38,29 +40,23 @@ final class LoginHandler implements IHandler
      */
     public function handle(array $params)
     {
-        $debug = $params["debug"];
-        $debug->autoTitle("[Login Handler]:");
-
-        if (self::isLoggedIn()) {
-            $debug->autoDebug("Already logged in.");
-            return "invalid";
-        }
+        if (self::isLoggedIn()) return pr::onInvalid();
 
         $username = utils::tryGetValue($params, "username");
         $password = utils::tryGetValue($params, "password");
+
+        if (utils::isNullOrEmpty($username) || utils::isNullOrEmpty($password))
+            return pr::onInvalid();
+
         $dbu = dbutils::getSingleton();
 
-        $debug->skip();
-
-        if ($dbu->isAccountExist($username, $password, $debug)) {
-            $debug->autoDebug("Account found!");
-            $this->setLoginCookies($username, $password);
-            return "true";
+        if ($dbu->isAccountExist($username, $password)) {
+            $accessLevel = $dbu->getAccessLevelFromAccount($username, $password);
+            $this->setLoginCookies($username, $password, $accessLevel);
+            return pr::onSuccess();
         }
 
-        $debug->skip();
-        $debug->autoDebug("Account not found!");
-        return "false";
+        return pr::onError();
     }
 
     /**
@@ -76,13 +72,15 @@ final class LoginHandler implements IHandler
      * Set current login session cookies.
      * @param $username
      * @param $password
+     * @param $accessLevel
      */
-    private function setLoginCookies($username, $password)
+    private function setLoginCookies($username, $password, $accessLevel)
     {
         $expire = dutils::getCurrentTimeAddition(dutils::hour);
         $path = "/";
 
         setcookie(LOGIN_USERNAME, $username, $expire, $path);
         setcookie(LOGIN_PASSWORD, utils::getSha512Hash($password), $expire, $path);
+        setcookie(LOGIN_ACCESS_LEVEL, $accessLevel, $expire, $path);
     }
 }

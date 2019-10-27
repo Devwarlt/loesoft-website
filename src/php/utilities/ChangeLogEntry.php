@@ -8,12 +8,10 @@
 
 namespace php\utilities;
 
-final class ChangeLog
-{
-    const clientType = 0;
-    const serverType = 1;
-    const websiteType = 2;
+use php\packet\ChangeLogType as clt;;
 
+final class ChangeLogEntry
+{
     private $id;
     private $version;
     private $type;
@@ -54,7 +52,7 @@ final class ChangeLog
     }
 
     /**
-     * Gets type of change log entry.
+     * Gets creation date of change log entry.
      * @return mixed
      */
     public function getCreation()
@@ -63,17 +61,17 @@ final class ChangeLog
     }
 
     /**
-     * Gets creation date of change log entry.
+     * Gets type of change log entry.
      * @return mixed
      */
     public function getType()
     {
         switch ($this->type) {
-            case self::clientType:
+            case clt::client:
                 return "client";
-            case self::serverType:
+            case clt::server:
                 return "server";
-            case self::websiteType:
+            case clt::website:
                 return "website";
             default:
                 return null;

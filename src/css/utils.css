@@ -21,7 +21,8 @@
 }
 
 .body {
-    padding-left: 64px;
+    padding-left: 2%;
+    padding-right: 2%;
     color: var(--ws-shade-color-4);
 }
 
@@ -49,6 +50,24 @@
 .relative-center {
     display: flex;
     justify-content: center;
-    padding: 0;
     width: 100%;
+}
+
+code.relative-center {
+    display: inline-table;
+    width: 99%;
+}
+
+.code-title {
+    background-color: var(--ws-shade-color-1);
+    padding: 2px;
+    margin-right: 4px;
+    border: 1px solid var(--ws-shade-color-4);
+    border-radius: var(--ws-button-border-radius);
+}
+
+.code-debug {
+    padding: 0;
+    margin: 0;
+    color: var(--ws-shade-color-4);
 }

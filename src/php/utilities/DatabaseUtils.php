@@ -2,6 +2,7 @@
 
 namespace php\utilities;
 
+use php\packet\AccessLevel as al;
 use php\utilities\Database as db;
 use php\utilities\Utils as utils;
 
@@ -25,51 +26,97 @@ final class DatabaseUtils
      * Check if account exists.
      * @param $username
      * @param $password
-     * @param $debug
+     * @param $hasEncryption
      * @return bool
      */
-    public function isAccountExist($username, $password, $debug)
+    public function isAccountExist($username, $password, $hasEncryption = true)
     {
         $db = db::getSingleton();
         $action = array(
             "sql" => "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
             "params" => array(
                 ":username" => $username,
-                ":password" => utils::getSha512Hash($password)
+                ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password
             )
         );
         $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
         $result = $db->select($action["sql"]);
-        $rows = $result->rowCount();
-
-        $debug->autoDebug("SQL > " . $result->queryString);
-        $debug->autoDebug("username > " . $action["params"][":username"] . " (" . $username . ")");
-        $debug->autoDebug("password > " . $action["params"][":password"] . " (" . $password . ")");
-        $debug->autoDebug("rows > " . $rows);
 
         return $result !== null && $result->rowCount() == 1;
     }
 
     /**
-     * Gets account level from account credentials.
-     * @param $username
-     * @param $password
-     * @return int
+     * Gets username from accounts.
+     * @param $id
+     * @return string
      */
-    public function getAccessLevelFromAccount($username, $password)
+    public function getUsernameById($id)
     {
         $db = db::getSingleton();
         $action = array(
-            "sql" => "select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
+            "sql" => "select `username` from `accounts` where `id` = ':id'",
+            "params" => array(
+                ":id" => $id
+            )
+        );
+        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
+        $result = $db->select($action["sql"]);
+
+        if ($result->rowCount() == 0) return "Unknown";
+
+        $account = $result->fetch(\PDO::FETCH_OBJ);
+
+        return $account->username;
+    }
+
+    /**
+     * Gets id from account credentials.
+     * @param $username
+     * @param $password
+     * @param $hasEncryption
+     * @return int
+     */
+    public function getIdFromAccount($username, $password, $hasEncryption = true)
+    {
+        $db = db::getSingleton();
+        $action = array(
+            "sql" => "select `id` from `accounts` where `username` = ':username' and `password` = ':password'",
             "params" => array(
                 ":username" => $username,
-                ":password" => $password
+                ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password
             )
         );
         $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
         $result = $db->select($action["sql"]);
 
         if ($result->rowCount() == 0) return -1;
+
+        $account = $result->fetch(\PDO::FETCH_OBJ);
+
+        return $account->id;
+    }
+
+    /**
+     * Gets level from account credentials.
+     * @param $username
+     * @param $password
+     * @param $hasEncryption
+     * @return int
+     */
+    public function getAccessLevelFromAccount($username, $password, $hasEncryption = true)
+    {
+        $db = db::getSingleton();
+        $action = array(
+            "sql" => "select `access_level` from `accounts` where `username` = ':username' and `password` = ':password'",
+            "params" => array(
+                ":username" => $username,
+                ":password" => $hasEncryption ? utils::getSha512Hash($password) : $password
+            )
+        );
+        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
+        $result = $db->select($action["sql"]);
+
+        if ($result->rowCount() == 0) return al::regular;
 
         $account = $result->fetch(\PDO::FETCH_OBJ);
 
@@ -160,7 +207,7 @@ final class DatabaseUtils
     {
         $db = db::getSingleton();
         $action = array(
-            "sql" => "select * from `changelogs` limit :limit offset :offset",
+            "sql" => "select * from `changelogs` order by `id` desc limit :limit offset :offset",
             "params" => array(
                 ":limit" => $limit,
                 ":offset" => ($page - 1) * $limit
@@ -170,5 +217,30 @@ final class DatabaseUtils
         $result = $db->select($action["sql"]);
 
         return $result;
+    }
+
+    /**
+     * Adds new change log entry.
+     * @param $version
+     * @param $type
+     * @param $authorId
+     * @param $content
+     * @return bool
+     */
+    public function publishChangeLog($version, $type, $authorId, $content)
+    {
+        $db = db::getSingleton();
+        $action = array(
+            "sql" => "insert into `changelogs` (`version`, `type`, `author_id`, `content`) values (':version', :type, :author_id, ':content')",
+            "params" => array(
+                ":version" => $version,
+                ":type" => $type,
+                ":author_id" => $authorId,
+                ":content" => $content
+            )
+        );
+        $action["sql"] = utils::replaceArray($action["sql"], $action["params"]);
+
+        return $db->insert($action["sql"]);
     }
 }

@@ -2,8 +2,11 @@
     /* shades */
     --ws-shade-color-1: #8B0000;
     --ws-shade-color-2: #FFA50022;
+    --ws-shade-color-2-solid: #FFA500;
     --ws-shade-color-3: #FF8C0066;
+    --ws-shade-color-3-solid: #FF8C00;
     --ws-shade-color-4: #FF8C009F;
+    --ws-shade-color-4-solid: #FF8C00;
     --ws-shade-color-5: #FFA500;
 
     /* text */
@@ -47,6 +50,14 @@ html {
 a:link {
     text-decoration: none;
     font-weight: bold;
+}
+
+a:link, a:visited {
+    color: var(--ws-shade-color-1);
+}
+
+a:hover, a:active {
+    color: var(--ws-shade-color-5);
 }
 
 hr {
@@ -118,4 +129,15 @@ th {
     text-align: center;
     border-radius: var(--ws-button-border-radius);
     border: 1px solid var(--ws-background-color-4);
+}
+
+restrict {
+    display: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+code span {
+    font-weight: bold;
 }
