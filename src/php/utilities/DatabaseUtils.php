@@ -22,6 +22,10 @@ final class DatabaseUtils
         return self::$singleton;
     }
 
+    /**
+     * Register new account.
+     * @return bool
+     */
     public function registerAccount($username, $password)
     {
         $db = db::getSingleton();
