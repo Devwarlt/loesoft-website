@@ -4,7 +4,7 @@ CREATE DATABASE IF NOT EXISTS `loesoft-devblog`
 
 USE `loesoft-devblog`;
 
-CREATE TABLE `accounts` (
+CREATE TABLE IF NOT EXISTS `accounts` (
   `id`           INT          NOT NULL AUTO_INCREMENT,
   `username`     VARCHAR(32)  NOT NULL,
   `password`     VARCHAR(128) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE `accounts` (
 )
   ENGINE = InnoDB;
 
-CREATE TABLE `news` (
+CREATE TABLE IF NOT EXISTS `news` (
   `id`          INT      NOT NULL AUTO_INCREMENT,
   `creation`    DATETIME NOT NULL DEFAULT current_timestamp,
   `edited`      DATETIME NOT NULL DEFAULT current_timestamp,
@@ -27,7 +27,7 @@ CREATE TABLE `news` (
 )
   ENGINE = InnoDB;
 
-CREATE TABLE `changelogs` (
+CREATE TABLE IF NOT EXISTS `changelogs` (
   `id`          INT         NOT NULL AUTO_INCREMENT,
   `version`     VARCHAR(19) NOT NULL,
   `type`        INT         NOT NULL,
